@@ -28,7 +28,7 @@ const POKE_LINES = [
 
 function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
 
-export function createNarrator() {
+export function createNarrator({ sound } = {}) {
   const el = document.createElement("div");
   el.className = "narrator";
   el.dataset.mode = "spread";
@@ -170,6 +170,7 @@ export function createNarrator() {
       state.typing = setInterval(function () {
         i += 1;
         node.textContent = text.slice(0, i);
+        if (sound) sound.type(text[i - 1]);
         if (i >= text.length) {
           clearInterval(state.typing);
           caret.remove();

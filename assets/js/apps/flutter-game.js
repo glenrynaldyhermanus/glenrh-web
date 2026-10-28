@@ -1,6 +1,6 @@
 /* Flutter web games: the build is ~15 MB, so the iframe only loads after Play. */
 
-export function mount(main, { narrator }) {
+export function mount(main, { narrator, sound }) {
   const app = main.querySelector("[data-app='game']");
   if (!app) return;
   const stage = app.querySelector("[data-stage]");
@@ -8,9 +8,11 @@ export function mount(main, { narrator }) {
   const status = app.querySelector("[data-status]");
   const name = app.dataset.name || "the game";
   let frame = null;
+  let unhush = null;
 
   function start() {
     if (frame) return;
+    if (sound) unhush = sound.hush();
     frame = document.createElement("iframe");
     frame.className = "game__frame";
     frame.src = app.dataset.src;
@@ -31,5 +33,6 @@ export function mount(main, { narrator }) {
     play.removeEventListener("click", start);
     if (frame) frame.remove();
     frame = null;
+    if (unhush) unhush();
   };
 }

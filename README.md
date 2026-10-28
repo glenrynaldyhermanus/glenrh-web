@@ -19,6 +19,7 @@ Then open http://localhost:5173. Opening the files straight from disk won't work
 - **Page turns.** `assets/js/app.js` intercepts internal links, fetches the next page, and swaps only `<main id="main">` inside a View Transition. The page curls forward or back depending on `data-folio`. Without View Transitions it fades; with *reduce motion* it swaps instantly.
 - **The narrator.** `assets/js/narrator.js` keeps one 3D Glen (Three.js, `glbs/glenv2.min.glb`) alive across pages. He moves into whichever `[data-narrator-slot]` is visible, changes pose per story beat and speaks in a bubble. If WebGL or the model fails, a poster image stays instead.
 - **Story beats.** `assets/js/story.js` watches `.beat` elements. When one reaches the middle of the screen, Glen plays its `data-pose` and says its `data-say`.
+- **Sound.** `assets/js/sound.js` plays Tamengetit's theme (`assets/audio/theme.mp3`) quietly in the background and draws the page flip and the narrator's typing ticks with Web Audio. Nothing plays until the reader's first click, tap or key. The button in the top right corner mutes it and the choice is remembered. The games hold the music while they run.
 - **Keyboard and swipe.** ← and → turn pages using `data-prev` and `data-next` on `<main>`. The Contents button opens the table of contents from `assets/js/config.js`.
 
 Poses: `sit` (on a stack of books), `read` (cross-legged), `wave`, `hey`, `walk`, `run` (page turns) and `dance`.
@@ -37,7 +38,8 @@ Poses: `sit` (on a stack of books), `read` (cross-legged), `wave`, `hey`, `walk`
 | `robots.txt`, `sitemap.xml` | For search engines |
 | `deploy/nginx.conf` | Server config, mounted into the container (not served) |
 | `assets/css/` | `tokens` (colours, type, spacing), `base`, `book` (spreads, narrator, page turns), `components`, `chapters`, `playground` |
-| `assets/js/` | `app` (router), `narrator`, `story`, `config` (contact + contents), `hire`, and `apps/` for the mini apps |
+| `assets/js/` | `app` (router), `narrator`, `story`, `sound`, `config` (contact + contents), `hire`, and `apps/` for the mini apps |
+| `assets/audio/` | Background music |
 | `assets/img/` | Chapter plates, work images, `icons.svg` sprite, favicon, OG image |
 | `assets/fonts/` | Bagel Fat One and Literata, self-hosted (OFL), declared in `tokens.css` |
 | `glbs/glenv2.min.glb` | The production 3D Glen. `glenv2.glb`, `glen.glb` and `fbxs/` are source files and are not deployed. |

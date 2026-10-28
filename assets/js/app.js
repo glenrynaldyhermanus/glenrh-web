@@ -6,6 +6,7 @@
 
 import { createNarrator } from "./narrator.js";
 import { mountStory } from "./story.js";
+import { createSound } from "./sound.js";
 import { CONTENTS } from "./config.js";
 
 const root = document.documentElement;
@@ -13,7 +14,8 @@ root.classList.remove("no-js");
 root.classList.add("js");
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const narrator = createNarrator();
+const sound = createSound();
+const narrator = createNarrator({ sound });
 const cache = new Map();
 let cleanups = [];
 let navToken = 0;
@@ -30,6 +32,8 @@ function normalise(path) {
 
 const island = document.querySelector(".island");
 const islandPill = island && island.querySelector(".island__pill");
+const masthead = document.querySelector(".masthead");
+if (masthead) sound.mountToggle(masthead);
 
 // The home page is both the cover and the prologue; which one you're on
 // depends on how far the book has been opened.
@@ -116,6 +120,7 @@ function paintIsland(main) {
 document.addEventListener("book:open", function (e) {
   if (bookOpen === e.detail.open) return;
   bookOpen = e.detail.open;
+  if (bookOpen) sound.flip("cover");
   const main = document.querySelector("main#main");
   if (main) paintIsland(main);
 });
@@ -140,7 +145,7 @@ async function enter(main) {
     try {
       const m = await import(mod);
       if (main.isConnected && typeof m.mount === "function") {
-        const c = m.mount(main, { narrator });
+        const c = m.mount(main, { narrator, sound });
         if (typeof c === "function") cleanups.push(c);
       }
     } catch (err) {
@@ -202,6 +207,7 @@ async function navigate(url, opts) {
   const forward = Number(next.dataset.folio || 0) >= Number(prev.dataset.folio || 0);
   root.dataset.turn = forward ? "forward" : "back";
   narrator.turn();
+  sound.flip(root.dataset.turn);
 
   const swap = function () {
     leave();
