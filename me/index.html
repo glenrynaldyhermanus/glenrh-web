@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter One: Me | The Book of Glen</title>
+<meta name="description" content="The long version of Glen Rynaldy Hermanus: the road so far, how he thinks about building software, and the tools he reaches for.">
+<link rel="canonical" href="https://glenrh.com/me/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Book of Glen">
+<meta property="og:title" content="Chapter One: Me | The Book of Glen">
+<meta property="og:description" content="The long version of Glen Rynaldy Hermanus: the road so far, how he thinks about building software, and the tools he reaches for.">
+<meta property="og:url" content="https://glenrh.com/me/">
+<meta property="og:image" content="https://glenrh.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e1424">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="/assets/css/tokens.css?v=7">
+<link rel="stylesheet" href="/assets/css/base.css?v=7">
+<link rel="stylesheet" href="/assets/css/book.css?v=7">
+<link rel="stylesheet" href="/assets/css/components.css?v=7">
+<link rel="stylesheet" href="/assets/css/chapters.css?v=7">
+<link rel="stylesheet" href="/assets/css/playground.css?v=7">
+<script>document.documentElement.classList.replace("no-js", "js");</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="/assets/js/app.js?v=6"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the story</a>
+<header class="masthead">
+  <nav class="island" aria-label="The Book of Glen">
+    <button type="button" class="island__pill" aria-expanded="false" aria-controls="island-panel">
+      <span class="island__seal" aria-hidden="true">G</span>
+      <span class="island__where"><span class="island__part">The Book of</span><span class="island__title">Glen</span></span>
+      <span class="island__folio" aria-hidden="true"></span>
+      <span class="island__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="visually-hidden">Open the chapters</span>
+    </button>
+    <div class="island__panel" id="island-panel">
+      <div class="island__inner">
+      <ol class="island__chapters">
+        <li><a href="/"><span class="island__no">Front</span><strong>Cover</strong><span class="island__sub">The closed book</span></a></li>
+        <li><a href="/#prologue"><span class="island__no">Intro</span><strong>Prologue</strong><span class="island__sub">Who is Glen?</span><span class="island__pg">p.&nbsp;1</span></a></li>
+        <li><a href="/me/" aria-current="page"><span class="island__no">I</span><strong>Me</strong><span class="island__sub">The long version</span><span class="island__pg">p.&nbsp;3</span></a></li>
+        <li><a href="/work/"><span class="island__no">II</span><strong>Work</strong><span class="island__sub">Seven stories</span><span class="island__pg">p.&nbsp;11</span></a></li>
+        <li><a href="/playground/"><span class="island__no">III</span><strong>Playground</strong><span class="island__sub">Four tiny apps</span><span class="island__pg">p.&nbsp;27</span></a></li>
+        <li><a href="/hire-me/"><span class="island__no">Epilogue</span><strong>Hire Me</strong><span class="island__sub">Your chapter</span><span class="island__pg">p.&nbsp;37</span></a></li>
+      </ol>
+      <div class="island__foot">
+        <button type="button" class="island__toc" data-open-contents aria-haspopup="dialog">
+          <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#book-open"/></svg>Full contents
+        </button>
+      </div>
+      </div>
+    </div>
+    <span class="island__read" aria-hidden="true"></span>
+  </nav>
+</header>
+<main id="main" class="chapter" data-page="me" data-ink="green" data-folio="3" data-prev="/" data-next="/work/" data-pose="sit" data-say="Grab a coffee. This is the long version.">
+  <div class="spread">
+    <section class="page page--left" aria-labelledby="page-title">
+      <p class="runner caps"><b>Chapter One</b></p>
+      <h1 id="page-title" class="page-title display">Me</h1>
+      <p class="lede">The longer story: where I&rsquo;ve been building, how I think, and what&rsquo;s in my bag.</p>
+      <div class="narrator-slot" data-narrator-slot></div>
+      <p class="folio">3</p>
+    </section>
+
+    <section class="page page--right" aria-label="Chapter One, the story">
+      <article class="beat" data-pose="sit" data-say="Grab a coffee. This is the long version.">
+        <figure class="plate">
+          <img src="/assets/img/chapters/me.webp" width="1200" height="900" loading="lazy" alt="Risograph illustration of a winding road through green hills with signposts, a phone and a laptop along the way and a rocket taking off at the top.">
+        </figure>
+        <span class="beat__label caps">The short version</span>
+        <h2>Builder, tinkerer, slightly obsessed.</h2>
+        <div class="prose">
+          <p class="drop">My name is Glen, and I&rsquo;m a software developer based in Indonesia. I design and build products end to end: native apps on Android and iOS, the Go services behind them, dashboards for the people running them, and automations to glue it all together.</p>
+          <p>Lately that has meant an HR system, a team of AI agents, EV chargers, a streaming studio and desktop tools for a cinema chain. Most of it started with someone saying <mark class="hl">&ldquo;this is annoying&rdquo;</mark>.</p>
+        </div>
+      </article>
+
+      <article class="beat" data-pose="walk" data-say="Every stop on this road shipped something.">
+        <span class="beat__label caps">The road so far</span>
+        <h2>Eleven months, a lot of builds.</h2>
+        <ol class="road">
+          <li>
+            <time class="caps" datetime="2025-12">December 2025</time>
+            <h3>Filpen</h3>
+            <p>An interactive streaming platform with branching stories, plus the CMS to write them. <a href="/work/short-stories/">Read the short story</a></p>
+          </li>
+          <li>
+            <time class="caps" datetime="2026-02">February 2026</time>
+            <h3>Devant</h3>
+            <p>A workspace for teams: projects, docs, chat, whiteboards and AI in one place. <a href="/work/devant/">Read the story</a></p>
+          </li>
+          <li>
+            <time class="caps" datetime="2026-08">August 2026</time>
+            <h3>HRIS, Baby Kick Tracker, Tamengetit</h3>
+            <p>An HR system for the whole hiring pipeline, a kick counter for expecting parents and a pocket-sized pet. <a href="/work/hris/">Read about HRIS</a></p>
+          </li>
+          <li>
+            <time class="caps" datetime="2026-09">September 2026</time>
+            <h3>MAVIS, ShtEV, Mograf, G-Cleaner</h3>
+            <p>A team of AI agents, a pay-by-QR EV charging system, a motion-graphics engine and a Mac cleaner. <a href="/work/mavis/">Read about MAVIS</a></p>
+          </li>
+          <li>
+            <time class="caps" datetime="2026-10">October 2026</time>
+            <h3>Climaxx, Cineflow and this book</h3>
+            <p>An AI production studio for short series, a desktop copilot for a cinema chain, and the book you&rsquo;re reading. <a href="/work/cineflow/">Read about Cineflow</a></p>
+          </li>
+        </ol>
+      </article>
+
+      <article class="beat" data-pose="read" data-say="Opinions, loosely held.">
+        <span class="beat__label caps">How I think</span>
+        <h2>Opinions, loosely held.</h2>
+        <ol class="habits">
+          <li><div><h3>Native when it matters.</h3><p>If an app lives in someone&rsquo;s pocket all day, it should feel like it belongs on that phone.</p></div></li>
+          <li><div><h3>Boring backends.</h3><p>Go, PostgreSQL and clear contracts. The excitement belongs in the product, not in the pager.</p></div></li>
+          <li><div><h3>Mock the world, then swap it.</h3><p>Payments, hardware and AI sit behind interfaces, so the screens can ship before every integration is ready.</p></div></li>
+          <li><div><h3>Parity is a feature.</h3><p>macOS and Windows, Android and iOS: the same behaviour and the same words on every platform.</p></div></li>
+        </ol>
+      </article>
+
+      <article class="beat" data-pose="walk" data-say="Right tool, right job.">
+        <span class="beat__label caps">What&rsquo;s in my bag</span>
+        <h2>Tools I reach for.</h2>
+        <div class="toolbox">
+          <div><h3>Mobile</h3><ul class="chips"><li>Kotlin</li><li>Jetpack Compose</li><li>Swift</li><li>SwiftUI</li><li>Flutter</li></ul></div>
+          <div><h3>Backend</h3><ul class="chips"><li>Go</li><li>PostgreSQL</li><li>Prisma</li><li>WebSockets</li><li>Firebase</li></ul></div>
+          <div><h3>Web</h3><ul class="chips"><li>Next.js</li><li>React</li><li>SvelteKit</li><li>Tailwind CSS</li></ul></div>
+          <div><h3>Desktop</h3><ul class="chips"><li>SwiftUI for macOS</li><li>WinUI&nbsp;3</li></ul></div>
+          <div><h3>Automation &amp; AI</h3><ul class="chips"><li>n8n</li><li>Gemini</li><li>AI SDK</li><li>MCP</li></ul></div>
+          <div><h3>Motion &amp; 3D</h3><ul class="chips"><li>Three.js</li><li>Rive</li><li>Flame</li></ul></div>
+        </div>
+      </article>
+
+      <article class="beat" data-pose="dance" data-say="Yes, that&rsquo;s really me. Well, the 3D me.">
+        <span class="beat__label caps">Off the page</span>
+        <h2>Small facts, all true.</h2>
+        <ul class="facts">
+          <li><svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#clock"/></svg><p>I live on UTC+7. It&rsquo;s <strong class="tabular" data-clock>morning</strong> for me right now.</p></li>
+          <li><svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#bot"/></svg><p>I work alongside five AI agents I built: Byte, Pixel, Buzz, North and Scan.</p></li>
+          <li><svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#user"/></svg><p>I made a 3D version of myself. He&rsquo;s the one doing the talking on this page.</p></li>
+          <li><svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#feather"/></svg><p>I&rsquo;m writing my own motion-graphics engine, with bones and inverse kinematics, for fun.</p></li>
+        </ul>
+      </article>
+
+      <nav class="pager" aria-label="Turn the page">
+        <a rel="prev" href="/">
+          <span class="caps"><svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-left"/></svg> Previous</span>
+          <strong>Prologue</strong>
+        </a>
+        <a rel="next" href="/work/">
+          <span class="caps">Next chapter <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-right"/></svg></span>
+          <strong>Chapter Two: Work</strong>
+        </a>
+      </nav>
+      <p class="folio">4</p>
+    </section>
+    <div class="ribbon" aria-hidden="true"></div>
+  </div>
+</main>
+
+<footer class="colophon">
+  <p>&copy; 2026 Glen Rynaldy Hermanus. Made with Love.</p>
+  <p>Tip: press &larr; and &rarr;, or swipe, to turn the pages.</p>
+</footer>
+</body>
+</html>

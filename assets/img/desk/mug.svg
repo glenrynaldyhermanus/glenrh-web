@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 200">
+  <defs>
+    <radialGradient id="ceramic" cx="0.35" cy="0.3" r="0.75">
+      <stop offset="0" stop-color="#fbf5e8"/>
+      <stop offset="0.6" stop-color="#e3d6ba"/>
+      <stop offset="1" stop-color="#a89676"/>
+    </radialGradient>
+    <radialGradient id="coffee" cx="0.42" cy="0.38" r="0.7">
+      <stop offset="0" stop-color="#6b4024"/>
+      <stop offset="0.55" stop-color="#3a2214"/>
+      <stop offset="1" stop-color="#1e110a"/>
+    </radialGradient>
+    <linearGradient id="handle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6eedd"/>
+      <stop offset="1" stop-color="#a89676"/>
+    </linearGradient>
+  </defs>
+  <!-- handle -->
+  <path d="M176 76 C 236 66, 244 136, 180 128" fill="none" stroke="url(#handle)" stroke-width="22" stroke-linecap="round"/>
+  <path d="M176 76 C 236 66, 244 136, 180 128" fill="none" stroke="#8d7b5d" stroke-opacity="0.35" stroke-width="2" transform="translate(4 6)"/>
+  <!-- body + rim -->
+  <circle cx="110" cy="100" r="84" fill="url(#ceramic)"/>
+  <circle cx="110" cy="100" r="84" fill="none" stroke="#9c8a69" stroke-opacity="0.5" stroke-width="2"/>
+  <circle cx="110" cy="100" r="70" fill="#cfc0a0"/>
+  <!-- coffee -->
+  <circle cx="110" cy="100" r="66" fill="url(#coffee)"/>
+  <circle cx="110" cy="100" r="62" fill="none" stroke="#8a5a34" stroke-opacity="0.55" stroke-width="5"/>
+  <ellipse cx="88" cy="78" rx="22" ry="10" fill="#fff3d9" opacity="0.32" transform="rotate(-28 88 78)"/>
+  <ellipse cx="80" cy="74" rx="7" ry="3.5" fill="#fffaf0" opacity="0.7" transform="rotate(-28 80 74)"/>
+  <!-- glaze stripe -->
+  <path d="M40 72 A 84 84 0 0 1 72 30" fill="none" stroke="#2f4f86" stroke-width="6" stroke-linecap="round" opacity="0.85"/>
+</svg>

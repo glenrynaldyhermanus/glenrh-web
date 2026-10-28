@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470">
+  <defs>
+    <linearGradient id="alu" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5a6070"/>
+      <stop offset="0.5" stop-color="#3b404d"/>
+      <stop offset="1" stop-color="#262a34"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1426"/>
+      <stop offset="1" stop-color="#1b2a4c"/>
+    </linearGradient>
+    <linearGradient id="lid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a2f3a"/>
+      <stop offset="1" stop-color="#4b5160"/>
+    </linearGradient>
+    <pattern id="keys" width="40" height="36" patternUnits="userSpaceOnUse">
+      <rect x="3" y="3" width="34" height="30" rx="5" fill="#1d2029"/>
+      <rect x="3" y="3" width="34" height="3" rx="1.5" fill="#fff" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <!-- screen, foreshortened: we look down on it from above the keyboard -->
+  <path d="M60 18 L 580 18 L 600 132 L 40 132 Z" fill="url(#lid)"/>
+  <path d="M74 28 L 566 28 L 582 124 L 58 124 Z" fill="url(#screen)"/>
+  <g stroke-linecap="round" stroke-width="6">
+    <path d="M96 46 L 220 46" stroke="#c9a14a"/>
+    <path d="M232 46 L 330 46" stroke="#f4ecd9" opacity="0.7"/>
+    <path d="M114 64 L 180 64" stroke="#d77a52"/>
+    <path d="M192 64 L 360 64" stroke="#f4ecd9" opacity="0.55"/>
+    <path d="M114 82 L 250 82" stroke="#7fa7e0"/>
+    <path d="M262 82 L 300 82" stroke="#c9a14a"/>
+    <path d="M96 100 L 160 100" stroke="#f4ecd9" opacity="0.55"/>
+    <path d="M400 46 L 540 46" stroke="#f4ecd9" opacity="0.18"/>
+    <path d="M400 64 L 500 64" stroke="#f4ecd9" opacity="0.18"/>
+  </g>
+  <rect x="96" y="108" width="10" height="10" fill="#f4ecd9" opacity="0.85"/>
+  <!-- hinge -->
+  <rect x="36" y="130" width="568" height="12" rx="6" fill="#1a1d25"/>
+  <!-- keyboard deck -->
+  <rect x="20" y="140" width="600" height="320" rx="26" fill="url(#alu)"/>
+  <rect x="20" y="140" width="600" height="320" rx="26" fill="none" stroke="#7d8496" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="62" y="166" width="520" height="180" rx="10" fill="#15171d" opacity="0.55"/>
+  <rect x="62" y="166" width="520" height="180" fill="url(#keys)"/>
+  <rect x="222" y="364" width="196" height="84" rx="12" fill="#2c303a" stroke="#6a7080" stroke-opacity="0.45" stroke-width="2"/>
+  <!-- the lamp's glint -->
+  <path d="M40 160 L 200 150" stroke="#fff" stroke-opacity="0.12" stroke-width="8" stroke-linecap="round"/>
+</svg>

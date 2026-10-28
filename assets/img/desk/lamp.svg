@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 320">
+  <defs>
+    <radialGradient id="brass" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#f6dc95"/>
+      <stop offset="0.45" stop-color="#c99a43"/>
+      <stop offset="1" stop-color="#5e4317"/>
+    </radialGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3f9a74"/>
+      <stop offset="0.18" stop-color="#2a7a5a"/>
+      <stop offset="0.7" stop-color="#145238"/>
+      <stop offset="1" stop-color="#0b3424"/>
+    </linearGradient>
+    <linearGradient id="glassSide" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity="0.35"/>
+      <stop offset="0.12" stop-color="#000" stop-opacity="0"/>
+      <stop offset="0.88" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="trim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3d68c"/>
+      <stop offset="1" stop-color="#8a6524"/>
+    </linearGradient>
+  </defs>
+  <!-- weighted brass base, peeking out under the shade -->
+  <circle cx="260" cy="196" r="104" fill="url(#brass)"/>
+  <circle cx="260" cy="196" r="84" fill="none" stroke="#6e4f1c" stroke-opacity="0.55" stroke-width="3"/>
+  <circle cx="260" cy="196" r="96" fill="none" stroke="#fff4cf" stroke-opacity="0.35" stroke-width="2"/>
+  <!-- pull chain -->
+  <g fill="url(#brass)">
+    <circle cx="318" cy="214" r="5"/><circle cx="324" cy="228" r="5"/><circle cx="330" cy="242" r="5"/>
+    <circle cx="336" cy="256" r="5"/><circle cx="342" cy="270" r="7"/>
+  </g>
+  <!-- emerald glass shade -->
+  <rect x="34" y="74" width="452" height="128" rx="58" fill="url(#glass)"/>
+  <rect x="34" y="74" width="452" height="128" rx="58" fill="url(#glassSide)"/>
+  <rect x="34" y="74" width="452" height="128" rx="58" fill="none" stroke="url(#trim)" stroke-width="7"/>
+  <path d="M92 96 C 180 84, 340 84, 430 96" fill="none" stroke="#bff2d9" stroke-opacity="0.55" stroke-width="9" stroke-linecap="round"/>
+  <path d="M120 110 C 200 102, 320 102, 400 110" fill="none" stroke="#e8fff3" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round"/>
+  <!-- brass finials at either end -->
+  <circle cx="34" cy="138" r="16" fill="url(#brass)"/>
+  <circle cx="486" cy="138" r="16" fill="url(#brass)"/>
+  <circle cx="260" cy="138" r="13" fill="url(#brass)" opacity="0.9"/>
+</svg>

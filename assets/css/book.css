@@ -1,0 +1,779 @@
+/* ---------- Masthead: the bookmark island ---------- */
+
+/* The header is only a small leather tab at the top centre. It grows into
+   a chapter picker on hover, focus or tap, and shrinks back on its own. */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  height: var(--masthead-h);
+  padding-top: 8px;
+  pointer-events: none;
+  view-transition-name: masthead;
+}
+
+.island {
+  --island-w: min(300px, calc(100vw - 24px));
+  --island-open-w: min(720px, calc(100vw - 16px));
+  position: relative;
+  align-self: flex-start;
+  width: var(--island-w);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgb(255 240 210 / 0.06), transparent 40%),
+    var(--leather-dark);
+  color: var(--on-night);
+  box-shadow:
+    inset 0 0 0 1px rgb(201 161 74 / 0.28),
+    0 10px 28px rgb(2 4 10 / 0.5),
+    0 2px 6px rgb(2 4 10 / 0.35);
+  pointer-events: auto;
+  overflow: hidden;
+  transition:
+    width 420ms cubic-bezier(0.32, 0.72, 0, 1),
+    border-radius 420ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 300ms var(--ease-out);
+}
+
+/* Gold stitching just inside the edge. */
+.island::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgb(201 161 74 / 0.32);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.island__pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  height: 36px;
+  padding: 0 0.75rem 0 0.35rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.island__seal {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f3dc9a, var(--gold) 55%, var(--gold-deep));
+  color: var(--leather-dark);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.875rem;
+  line-height: 1;
+  box-shadow: inset 0 -1px 2px rgb(0 0 0 / 0.35), 0 1px 2px rgb(0 0 0 / 0.4);
+  transition: transform 500ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.island__where {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.island__part {
+  flex: none;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.island__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.island__folio {
+  flex: none;
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-night-2);
+}
+
+.island__folio:empty { display: none; }
+
+/* One dot per part of the book; the current one stretches into a dash. */
+.island__dots { display: flex; gap: 3px; flex: none; }
+.island__dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgb(244 236 217 / 0.25);
+  transition: width 320ms var(--ease-out), background-color 320ms var(--ease-out);
+}
+.island__dots i.is-here { width: 12px; background: var(--gold); }
+
+/* Reading progress, stitched along the bottom edge. */
+.island__read {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-light));
+  transform: scaleX(var(--read, 0));
+  transform-origin: left;
+  opacity: 0.85;
+  transition: opacity 200ms var(--ease-out);
+}
+
+.island__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 420ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.island__inner { min-height: 0; overflow: hidden; }
+
+.island__chapters {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+  padding: 4px 8px 0;
+  list-style: none;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 200ms var(--ease-out), transform 300ms var(--ease-out);
+}
+
+.island__chapters a {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  min-height: 84px;
+  padding: 10px 10px 8px;
+  border-radius: 12px;
+  background: rgb(244 236 217 / 0.04);
+  box-shadow: inset 0 0 0 1px rgb(244 236 217 / 0.08);
+  text-decoration: none;
+  transition: background-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.island__chapters a:hover { background: rgb(201 161 74 / 0.1); box-shadow: inset 0 0 0 1px rgb(201 161 74 / 0.4); }
+.island__chapters a[aria-current] { background: rgb(201 161 74 / 0.14); box-shadow: inset 0 0 0 1px var(--gold); }
+
+.island__no {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--gold);
+}
+
+.island__chapters strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.1;
+}
+
+.island__sub { font-size: 0.6875rem; line-height: 1.3; color: var(--on-night-2); }
+
+.island__pg {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 0.625rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-night-2);
+}
+
+.island__foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s2);
+  padding: 0 14px;
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out);
+}
+
+.island__foot > * { margin-block: 10px 12px; }
+
+.island__toc {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--on-night-2);
+  font: inherit;
+  font-size: 0.75rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.island__toc:hover { color: var(--gold-light); }
+.island__toc .icon { width: 13px; height: 13px; }
+
+.island :focus-visible { outline: 2px solid var(--gold-light); outline-offset: 2px; box-shadow: none; }
+
+/* Open on tap or keyboard focus, and on hover where there is a mouse.
+   .is-shut wins so a second tap can close it while it still has focus. */
+.island:is(.is-open, :focus-within):not(.is-shut) {
+  width: var(--island-open-w);
+  border-radius: 22px;
+  box-shadow:
+    inset 0 0 0 1px rgb(201 161 74 / 0.4),
+    0 24px 60px rgb(2 4 10 / 0.6),
+    0 4px 12px rgb(2 4 10 / 0.4);
+}
+.island:is(.is-open, :focus-within):not(.is-shut) .island__panel { grid-template-rows: 1fr; }
+.island:is(.is-open, :focus-within):not(.is-shut) .island__chapters { opacity: 1; transform: none; transition-delay: 90ms; }
+.island:is(.is-open, :focus-within):not(.is-shut) .island__foot { opacity: 1; transition-delay: 140ms; }
+.island:is(.is-open, :focus-within):not(.is-shut) .island__read { opacity: 0; }
+.island:is(.is-open, :focus-within):not(.is-shut) .island__seal { transform: rotate(-12deg) scale(1.06); }
+
+@media (hover: hover) {
+  .island:hover:not(.is-shut) {
+    width: var(--island-open-w);
+    border-radius: 22px;
+    box-shadow:
+      inset 0 0 0 1px rgb(201 161 74 / 0.4),
+      0 24px 60px rgb(2 4 10 / 0.6),
+      0 4px 12px rgb(2 4 10 / 0.4);
+  }
+  .island:hover:not(.is-shut) .island__panel { grid-template-rows: 1fr; }
+  .island:hover:not(.is-shut) .island__chapters { opacity: 1; transform: none; transition-delay: 90ms; }
+  .island:hover:not(.is-shut) .island__foot { opacity: 1; transition-delay: 140ms; }
+  .island:hover:not(.is-shut) .island__read { opacity: 0; }
+  .island:hover:not(.is-shut) .island__seal { transform: rotate(-12deg) scale(1.06); }
+}
+
+/* Without JS the island has nothing to say, so it simply names the book. */
+.no-js .island__dots { display: none; }
+
+@media (max-width: 759px) {
+  .island__chapters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .island__chapters a { min-height: 76px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .island,
+  .island__panel,
+  .island__chapters,
+  .island__foot,
+  .island__seal { transition: none; }
+}
+
+/* ---------- Spread ---------- */
+
+.chapter { display: block; }
+
+.spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: min(100% - 2 * clamp(0.75rem, 2.5vw, 2rem), 1440px);
+  margin: var(--s2) auto var(--s6);
+  border: var(--cover-edge) solid var(--leather);
+  border-radius: 10px;
+  background:
+    linear-gradient(90deg,
+      rgb(120 90 40 / 0.1),
+      transparent 4%,
+      transparent calc(50% - 70px),
+      rgb(60 40 20 / 0.07) calc(50% - 14px),
+      rgb(60 40 20 / 0.22) 50%,
+      rgb(60 40 20 / 0.07) calc(50% + 14px),
+      transparent calc(50% + 70px),
+      transparent 96%,
+      rgb(120 90 40 / 0.1)),
+    var(--paper);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 248 230 / 0.6),
+    inset 0 0 40px rgb(150 110 50 / 0.12),
+    0 0 0 1px rgb(201 161 74 / 0.35),
+    0 2px 0 1px var(--leather-dark),
+    0 30px 60px -10px rgb(0 0 0 / 0.55),
+    0 12px 24px rgb(0 0 0 / 0.3);
+}
+
+/* Gold tooling on the leather that frames the pages. */
+.spread::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--cover-edge) + 3px);
+  border: 1px solid rgb(201 161 74 / 0.55);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.page {
+  position: relative;
+  min-width: 0;
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4.2vw, 4.5rem) var(--s6);
+}
+
+.page--left {
+  position: sticky;
+  top: var(--masthead-h);
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  height: calc(100svh - var(--masthead-h) - var(--s1) - var(--cover-edge));
+  min-height: 560px;
+  padding-bottom: var(--s4);
+}
+
+.runner {
+  margin-bottom: var(--s2);
+  color: var(--ink-2);
+}
+
+.runner b { color: var(--chapter-text); font-weight: 600; }
+
+.page-title {
+  font-size: var(--text-title);
+  letter-spacing: -0.02em;
+  outline: none;
+}
+
+.page-title:focus-visible { box-shadow: none; outline: none; }
+
+.lede {
+  max-width: 34ch;
+  margin-top: var(--s3);
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+.narrator-slot {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 240px;
+  margin-top: var(--s3);
+}
+
+.folio {
+  position: absolute;
+  bottom: var(--s3);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+
+.page--left .folio { left: clamp(1.5rem, 4.2vw, 4.5rem); }
+.page--right .folio { right: clamp(1.5rem, 4.2vw, 4.5rem); }
+
+.no-js .narrator-slot {
+  background: url("/assets/img/glen-poster.webp") center bottom / contain no-repeat;
+}
+
+@media (max-width: 899px) {
+  .spread {
+    grid-template-columns: minmax(0, 1fr);
+    background: var(--paper);
+  }
+  .page--left {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 0;
+    padding-bottom: var(--s3);
+  }
+  .page--left .folio { display: none; }
+  .page--right { padding-top: var(--s2); padding-bottom: var(--s7); }
+  .narrator-slot {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    z-index: 40;
+    width: 112px;
+    height: 150px;
+    min-height: 0;
+    margin: 0;
+    flex: none;
+    pointer-events: none;
+  }
+  .no-js .narrator-slot { display: none; }
+}
+
+/* ---------- Beats (right page) ---------- */
+
+.beat {
+  padding-block: var(--s4);
+  opacity: 0.35;
+  transform: translateY(12px);
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+}
+
+.beat:first-child { padding-top: 0; }
+.beat.is-seen, .no-js .beat { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .beat { opacity: 1; transform: none; transition: none; }
+}
+
+.beat + .beat { border-top: 1px dashed var(--line-strong); }
+
+.beat__label {
+  display: block;
+  margin-bottom: var(--s1);
+  color: var(--chapter-text);
+}
+
+.beat h2,
+.beat h3 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: var(--text-2xl);
+  line-height: 1.08;
+  margin-bottom: var(--s2);
+}
+
+.beat h3 { font-size: var(--text-xl); }
+
+.prose { max-width: 60ch; }
+.prose p + p { margin-top: var(--s2); }
+.prose strong { font-weight: 600; }
+
+.plate {
+  margin: 0 0 var(--s3);
+}
+
+.plate img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  mix-blend-mode: multiply;
+}
+
+.plate figcaption {
+  margin-top: var(--s1);
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+.drop::first-letter {
+  float: left;
+  margin: 0.1em 0.12em 0 0;
+  font-family: var(--font-display);
+  font-size: 3.6em;
+  line-height: 0.8;
+  color: var(--chapter-text);
+}
+
+/* ---------- Ribbon bookmark (reading progress) ---------- */
+
+.ribbon {
+  position: fixed;
+  top: var(--masthead-h);
+  left: calc(50% + 8px);
+  z-index: 30;
+  width: 20px;
+  height: calc(48px + var(--progress, 0) * 32vh);
+  background: linear-gradient(90deg, #8f3c20, var(--terracotta) 45%, #c96a44 60%, #8f3c20);
+  filter: drop-shadow(1px 2px 1px rgb(0 0 0 / 0.25));
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 10px), 0 100%);
+  pointer-events: none;
+  transition: height 120ms linear, transform 420ms var(--ease-out), opacity 300ms var(--ease-out);
+}
+
+.ribbon.is-tucked { transform: translateY(-110%); opacity: 0; }
+
+@media (max-width: 899px) {
+  .ribbon { left: auto; right: 18px; width: 16px; height: calc(32px + var(--progress, 0) * 18vh); }
+}
+
+.no-js .ribbon { display: none; }
+
+/* ---------- Footnotes ---------- */
+
+.fn {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35em;
+  height: 1.35em;
+  margin-left: 0.1em;
+  padding: 0;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+  font-size: 0.7em;
+  font-weight: 600;
+  line-height: 1;
+  vertical-align: super;
+}
+
+.fn:hover { background: var(--gold-light); }
+
+.fn-note {
+  max-width: min(320px, 90vw);
+  margin: 0;
+  padding: var(--s2);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.fn-note.is-anchored { position: fixed; inset: auto; }
+
+/* ---------- Narrator (Glen + speech bubble) ---------- */
+
+.narrator {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 45;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  view-transition-name: narrator;
+}
+
+.narrator__canvas,
+.narrator__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.narrator__poster {
+  object-fit: contain;
+  object-position: center bottom;
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.is-glen-ready .narrator__poster { opacity: 0; }
+
+.narrator__hit {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 22%;
+  bottom: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: auto;
+  cursor: pointer;
+  border-radius: 40%;
+}
+
+.bubble {
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: min(300px, 72%);
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  background: var(--paper);
+  font-size: var(--text-base);
+  line-height: 1.4;
+  box-shadow: 3px 3px 0 var(--ink);
+  pointer-events: auto;
+  transform-origin: 80% 100%;
+  transition:
+    opacity var(--duration-default) var(--ease-out),
+    transform var(--duration-default) var(--ease-out);
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  right: 18%;
+  bottom: -12px;
+  width: 18px;
+  height: 12px;
+  background: var(--ink);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.narrator[data-mode="spread"] .bubble {
+  top: auto;
+  left: auto;
+  bottom: var(--bubble-bottom, 72%);
+  right: var(--bubble-right, 30%);
+  width: max-content;
+}
+
+.narrator[data-mode="spread"] .bubble::after { right: 22px; }
+
+.bubble[hidden] { display: block; opacity: 0; transform: scale(0.9); pointer-events: none; }
+
+.bubble__caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: var(--ink);
+  animation: caret 900ms steps(1) infinite;
+}
+
+@keyframes caret { 50% { opacity: 0; } }
+
+.narrator[data-mode="mini"] .bubble {
+  left: auto;
+  right: 70%;
+  top: auto;
+  bottom: 72%;
+  width: max-content;
+  max-width: min(230px, calc(100vw - 150px));
+  font-size: var(--text-sm);
+}
+
+.narrator[data-mode="mini"] .bubble::after { right: 8px; }
+
+.narrator[data-mode="mini"] { transition: opacity var(--duration-default) var(--ease-out); }
+body:has(:is(input, textarea, select):focus) .narrator[data-mode="mini"] { opacity: 0; pointer-events: none; }
+
+.narrator[data-mode="cover"] .bubble {
+  left: auto;
+  right: calc(100% + 48px);
+  top: 6%;
+  width: max-content;
+  max-width: min(240px, 22vw);
+}
+
+.narrator[data-mode="cover"] .bubble::after {
+  right: -12px;
+  bottom: 18px;
+  width: 12px;
+  height: 18px;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+@media (max-width: 899px) {
+  .narrator[data-mode="cover"] .bubble { display: none; }
+}
+
+/* ---------- Contents dialog ---------- */
+
+.contents {
+  width: min(680px, calc(100vw - 2rem));
+  max-height: calc(100svh - 2rem);
+  padding: 0;
+  border: var(--cover-edge) solid var(--leather);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px rgb(201 161 74 / 0.45), 0 30px 70px rgb(0 0 0 / 0.55);
+}
+
+.contents::backdrop { background: rgb(9 13 25 / 0.6); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+
+.contents[open] { animation: contents-in var(--duration-slow) var(--ease-out); }
+
+@keyframes contents-in {
+  from { opacity: 0; transform: translateY(16px) rotate(-1deg); }
+}
+
+.contents__page { padding: clamp(1.5rem, 5vw, 3rem); }
+
+.contents__head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--s2);
+  margin-bottom: var(--s3);
+}
+
+.contents h2 { font-family: var(--font-display); font-weight: 650; font-size: var(--text-2xl); }
+
+.toc { list-style: none; }
+
+.toc a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.55rem 0;
+  text-decoration: none;
+}
+
+.toc a:hover .toc__label,
+.toc a[aria-current="page"] .toc__label { text-decoration: underline 3px var(--gold); text-underline-offset: 0.25em; }
+
+.toc__label { font-weight: 600; }
+.toc__sub .toc__label { font-weight: 400; }
+.toc__dots { flex: 1; min-width: 2rem; border-bottom: 2px dotted var(--line-strong); transform: translateY(-0.3em); }
+.toc__no { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.toc__sub { padding-left: var(--s3); font-size: var(--text-sm); }
+.toc__part { margin-top: var(--s2); }
+
+/* ---------- Page turn ---------- */
+
+@view-transition { navigation: none; }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-group(masthead),
+::view-transition-group(narrator) { animation: none; }
+::view-transition-old(narrator) { display: none; }
+::view-transition-new(narrator) { animation: none; }
+
+html[data-turn="forward"]::view-transition-old(root) {
+  z-index: 2;
+  transform-origin: left center;
+  animation: page-out var(--duration-turn) var(--ease-page) both;
+}
+
+html[data-turn="back"]::view-transition-new(root) {
+  z-index: 2;
+  transform-origin: left center;
+  animation: page-in var(--duration-turn) var(--ease-page) both;
+}
+
+html[data-turn="back"]::view-transition-old(root) { z-index: 1; }
+
+@keyframes page-out {
+  0% { transform: perspective(2600px) rotateY(0deg); filter: brightness(1); }
+  100% { transform: perspective(2600px) rotateY(-96deg); filter: brightness(0.72); }
+}
+
+@keyframes page-in {
+  0% { transform: perspective(2600px) rotateY(-96deg); filter: brightness(0.72); }
+  100% { transform: perspective(2600px) rotateY(0deg); filter: brightness(1); }
+}
+
+.chapter.is-leaving { opacity: 0; transition: opacity 160ms var(--ease-in); }
+.chapter.is-entering { animation: fade-in 220ms var(--ease-out); }
+
+@keyframes fade-in { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-turn]::view-transition-old(root),
+  html[data-turn]::view-transition-new(root) { animation: none; }
+}
+
+

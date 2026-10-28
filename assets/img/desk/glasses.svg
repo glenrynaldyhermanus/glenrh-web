@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 140">
+  <defs>
+    <radialGradient id="lens" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.32"/>
+      <stop offset="0.5" stop-color="#bcd3ff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.12"/>
+    </radialGradient>
+  </defs>
+  <!-- folded temples -->
+  <path d="M30 70 C 40 112, 140 118, 196 104" fill="none" stroke="#2a1a12" stroke-width="7" stroke-linecap="round"/>
+  <path d="M270 70 C 262 110, 170 120, 110 100" fill="none" stroke="#3a2418" stroke-width="7" stroke-linecap="round"/>
+  <!-- frames -->
+  <circle cx="86" cy="66" r="54" fill="url(#lens)" stroke="#2a1a12" stroke-width="10"/>
+  <circle cx="214" cy="66" r="54" fill="url(#lens)" stroke="#2a1a12" stroke-width="10"/>
+  <circle cx="86" cy="66" r="54" fill="none" stroke="#8a5a34" stroke-opacity="0.6" stroke-width="2"/>
+  <circle cx="214" cy="66" r="54" fill="none" stroke="#8a5a34" stroke-opacity="0.6" stroke-width="2"/>
+  <path d="M136 56 Q 150 44 164 56" fill="none" stroke="#2a1a12" stroke-width="9" stroke-linecap="round"/>
+  <path d="M58 44 A 36 36 0 0 1 84 32" fill="none" stroke="#fff" stroke-opacity="0.55" stroke-width="5" stroke-linecap="round"/>
+  <path d="M186 44 A 36 36 0 0 1 212 32" fill="none" stroke="#fff" stroke-opacity="0.55" stroke-width="5" stroke-linecap="round"/>
+</svg>

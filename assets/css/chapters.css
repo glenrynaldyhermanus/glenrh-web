@@ -1,0 +1,55 @@
+/* Per-chapter adjustments. Each page sets data-ink on <main> for its chapter ink. */
+
+[data-page="home"] .spread { margin-top: 0; }
+
+.story-link__title em::before { content: "\2014\00a0"; color: var(--ink-3); }
+
+.chapter-note {
+  margin-top: var(--s3);
+  padding: var(--s2) var(--s3);
+  border: 2px dashed var(--line-strong);
+  border-radius: 12px;
+  color: var(--ink-2);
+}
+
+.chapter-note a { font-weight: 600; }
+
+.prose + .meta { margin-top: var(--s3); }
+
+.diagram { margin: var(--s3) 0 0; }
+.diagram figcaption { text-align: center; color: var(--ink-3); margin-bottom: var(--s1); }
+.diagram__node--core small { display: inline-block; margin-top: 0.15rem; padding: 0 0.3em; border-radius: 4px; background: var(--paper); color: var(--ink-2); }
+.diagram + .chips { margin-top: var(--s3); }
+
+.plate--photo { margin-top: var(--s3); }
+.plate--photo img { mix-blend-mode: normal; aspect-ratio: 16 / 9; object-fit: cover; }
+
+.figure-row + .plate--photo,
+.browser + .plate--photo { margin-top: var(--s4); }
+
+.vignettes .beat { padding-top: var(--s3); }
+.vignettes .beat:first-child { border-top: 0; }
+
+/* Hire Me letter */
+.letter__to { color: var(--ink-2); }
+fieldset.field { min-width: 0; margin-inline: 0; padding: 0; border: 0; }
+fieldset.field legend { margin-bottom: 0.35rem; padding: 0; font-weight: 600; font-size: var(--text-sm); }
+select.input {
+  appearance: none;
+  padding-right: 2.5rem;
+  background:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%) right 1.15rem center / 6px 6px no-repeat,
+    linear-gradient(-45deg, transparent 50%, var(--ink) 50%) right 0.8rem center / 6px 6px no-repeat,
+    var(--paper);
+  cursor: pointer;
+}
+.contact-list button { cursor: pointer; font: inherit; color: inherit; }
+.ending p:last-child > a:only-child { white-space: nowrap; }
+.ending a .icon { display: inline-block; width: 1rem; height: 1rem; vertical-align: -0.15em; }
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  margin-top: var(--s3);
+}

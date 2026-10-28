@@ -1,831 +1,231 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="no-js">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Glen Rynaldy Hermanus — Tech Geek &amp; Mobile Developer</title>
-<meta name="description" content="Glen Rynaldy Hermanus — tech geek and mobile developer. Building apps that feel clear, fast, and comfortable to use." />
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-<link rel="preload" href="glbs/glenv2.min.glb" as="fetch" type="model/gltf-binary" crossorigin />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Book of Glen: Glen Rynaldy Hermanus, software developer</title>
+<meta name="description" content="An interactive picture book about Glen Rynaldy Hermanus, a software developer from Indonesia who builds native mobile apps, Go backends, dashboards and AI agents.">
+<link rel="canonical" href="https://glenrh.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Book of Glen">
+<meta property="og:title" content="The Book of Glen: Glen Rynaldy Hermanus, software developer">
+<meta property="og:description" content="An interactive picture book about Glen Rynaldy Hermanus, a software developer from Indonesia who builds native mobile apps, Go backends, dashboards and AI agents.">
+<meta property="og:url" content="https://glenrh.com/">
+<meta property="og:image" content="https://glenrh.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e1424">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="/assets/css/tokens.css?v=7">
+<link rel="stylesheet" href="/assets/css/base.css?v=7">
+<link rel="stylesheet" href="/assets/css/book.css?v=7">
+<link rel="stylesheet" href="/assets/css/components.css?v=7">
+<link rel="stylesheet" href="/assets/css/chapters.css?v=7">
+<link rel="stylesheet" href="/assets/css/playground.css?v=7">
+<script>document.documentElement.classList.replace("no-js", "js");</script>
 <script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-  }
-}
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
 </script>
-<link rel="stylesheet" href="styles.css?v=soft-26" />
+<script type="module" src="/assets/js/app.js?v=6"></script>
 </head>
 <body>
-
-<div class="sky" aria-hidden="true">
-  <div class="starfield" data-depth="0.25">
-    <div class="starfield__layer" id="stars-far" data-depth="8"></div>
-    <div class="starfield__layer" id="stars-mid" data-depth="18"></div>
-    <div class="starfield__layer" id="stars-near" data-depth="32"></div>
-  </div>
-
-  <!-- Day-only sky life: soft clouds + birds -->
-  <div class="day-sky" aria-hidden="true">
-    <div class="clouds">
-      <svg class="cloud cloud--a" viewBox="0 0 220 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="cloud__shade" d="M36 78c-18 0-30-12-30-28s14-28 32-28c4-16 18-28 36-28 14 0 26 6 32 16 8-8 20-12 32-12 26 0 44 18 44 42 0 4-1 8-2 12 16 4 28 16 28 32 0 18-16 32-36 32H52c-20 0-36-12-36-28 0-6 2-12 6-16Z" />
-        <path class="cloud__body" d="M40 72c-16 0-28-10-28-24s12-24 28-24c4-14 16-24 32-24 12 0 22 5 28 14 6-6 16-10 26-10 22 0 38 14 38 34v4c14 2 24 12 24 26 0 16-14 28-32 28H54c-18 0-32-10-32-24 0-6 2-10 6-14Z" />
-      </svg>
-      <svg class="cloud cloud--b" viewBox="0 0 180 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="cloud__shade" d="M28 64c-14 0-24-10-24-22s10-22 24-22c4-12 14-20 28-20 10 0 18 4 24 12 6-6 14-10 24-10 20 0 34 14 34 32 0 2 0 4-1 6 12 2 20 12 20 24 0 14-12 24-28 24H40c-14 0-26-8-26-20 0-4 2-8 4-12Z" />
-        <path class="cloud__body" d="M30 58c-12 0-22-8-22-18s10-18 22-18c4-10 12-16 24-16 8 0 16 3 20 10 5-5 12-8 20-8 16 0 28 10 28 26v2c10 2 18 10 18 20 0 12-10 20-24 20H42c-12 0-22-6-22-16 0-4 2-8 4-10Z" />
-      </svg>
-      <svg class="cloud cloud--c" viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="cloud__shade" d="M24 58c-12 0-20-8-20-18s8-18 20-18c3-10 12-16 22-16 8 0 14 3 18 8 4-4 10-6 16-6 14 0 24 10 24 22v2c8 2 14 8 14 16 0 10-8 16-18 16H34c-10 0-18-4-18-12 0-4 1-6 2-8Z" />
-        <path class="cloud__body" d="M26 52c-10 0-18-6-18-14s8-14 18-14c3-8 10-14 20-14 6 0 12 2 16 8 4-4 8-6 14-6 12 0 20 8 20 18v2c8 1 12 6 12 12 0 8-6 14-16 14H36c-8 0-16-4-16-10 0-2 1-4 2-6Z" />
-      </svg>
-      <svg class="cloud cloud--d" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="cloud__shade" d="M32 70c-16 0-28-10-28-24s12-24 28-24c4-14 16-24 32-24 10 0 20 4 26 12 6-6 16-10 26-10 22 0 38 14 38 34 0 2 0 4-1 6 14 4 24 14 24 28 0 16-14 28-32 28H48c-18 0-32-10-32-24 0-4 1-8 4-12Z" />
-        <path class="cloud__body" d="M34 64c-14 0-24-8-24-20s10-20 24-20c4-12 14-20 28-20 10 0 18 4 24 10 5-5 14-8 22-8 18 0 32 12 32 28v4c12 2 20 10 20 22 0 14-12 24-28 24H50c-16 0-28-8-28-20 0-4 2-8 4-10Z" />
-      </svg>
-    </div>
-
-    <div class="birds">
-      <svg class="bird bird--1" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="bird__wing bird__wing--l" d="M24 16C16 16 8 10 2 6" />
-        <path class="bird__wing bird__wing--r" d="M24 16C32 16 40 10 46 6" />
-        <circle class="bird__body" cx="24" cy="16" r="2.5" />
-      </svg>
-      <svg class="bird bird--2" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="bird__wing bird__wing--l" d="M24 16C16 16 8 10 2 6" />
-        <path class="bird__wing bird__wing--r" d="M24 16C32 16 40 10 46 6" />
-        <circle class="bird__body" cx="24" cy="16" r="2.5" />
-      </svg>
-      <svg class="bird bird--3" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="bird__wing bird__wing--l" d="M24 16C16 16 8 10 2 6" />
-        <path class="bird__wing bird__wing--r" d="M24 16C32 16 40 10 46 6" />
-        <circle class="bird__body" cx="24" cy="16" r="2.5" />
-      </svg>
-      <svg class="bird bird--4" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="bird__wing bird__wing--l" d="M24 16C16 16 8 10 2 6" />
-        <path class="bird__wing bird__wing--r" d="M24 16C32 16 40 10 46 6" />
-        <circle class="bird__body" cx="24" cy="16" r="2.5" />
-      </svg>
-      <svg class="bird bird--5" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="bird__wing bird__wing--l" d="M24 16C16 16 8 10 2 6" />
-        <path class="bird__wing bird__wing--r" d="M24 16C32 16 40 10 46 6" />
-        <circle class="bird__body" cx="24" cy="16" r="2.5" />
-      </svg>
-    </div>
-  </div>
-
-  <div class="celestial">
-    <div class="celestial__orbit celestial__orbit--moon">
-      <svg class="moon" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <clipPath id="moon-disc-home">
-            <circle cx="130" cy="130" r="76" />
-          </clipPath>
-          <radialGradient id="moon-fill-home" cx="38%" cy="32%" r="68%">
-            <stop offset="0%" stop-color="var(--moon)" />
-            <stop offset="58%" stop-color="var(--moon)" />
-            <stop offset="100%" stop-color="var(--moon-shade)" />
-          </radialGradient>
-          <filter id="moon-grain-home" x="-20%" y="-20%" width="140%" height="140%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" seed="3" result="noise" />
-            <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0" />
-          </filter>
-        </defs>
-        <circle cx="130" cy="130" r="122" class="moon__glow moon__glow--outer" />
-        <circle cx="130" cy="130" r="100" class="moon__glow moon__glow--inner" />
-        <g clip-path="url(#moon-disc-home)">
-          <circle cx="130" cy="130" r="76" class="moon__body" fill="url(#moon-fill-home)" />
-          <circle cx="108" cy="108" r="22" class="moon__highlight" />
-          <ellipse class="moon__crater" cx="152" cy="108" rx="14" ry="13" />
-          <ellipse class="moon__crater moon__crater--soft" cx="116" cy="148" rx="11" ry="10" />
-          <ellipse class="moon__crater moon__crater--soft" cx="164" cy="150" rx="7" ry="6.5" />
-          <ellipse class="moon__crater moon__crater--soft" cx="128" cy="118" rx="5" ry="4.5" />
-          <ellipse class="moon__crater" cx="98" cy="122" rx="6.5" ry="6" />
-          <circle cx="130" cy="130" r="76" class="moon__grain" filter="url(#moon-grain-home)" />
-        </g>
-      </svg>
-    </div>
-
-    <div class="celestial__orbit celestial__orbit--sun">
-      <svg class="sun" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <radialGradient id="sun-fill-home" cx="38%" cy="34%" r="70%">
-            <stop offset="0%" stop-color="var(--sun-lit)" />
-            <stop offset="55%" stop-color="var(--sun)" />
-            <stop offset="100%" stop-color="var(--sun)" />
-          </radialGradient>
-        </defs>
-        <circle class="sun__glow sun__glow--outer" cx="130" cy="130" r="118" />
-        <circle class="sun__glow sun__glow--inner" cx="130" cy="130" r="92" />
-        <circle class="sun__body" cx="130" cy="130" r="70" fill="url(#sun-fill-home)" />
-      </svg>
-    </div>
-  </div>
-
-  <div class="horizon-glow"></div>
-
-  <svg class="horizon horizon--scene" viewBox="0 0 1440 760" preserveAspectRatio="xMaxYMax slice" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <clipPath id="mountain-clip-far-home">
-        <path d="
-      M-70 630
-      C60 540 170 385 260 365
-      C360 340 490 555 620 630
-      C680 530 700 355 760 340
-      C850 320 1010 545 1140 630
-      C1200 530 1230 390 1300 375
-      C1400 350 1510 555 1580 630
-      Z" />
-      </clipPath>
-      <clipPath id="mountain-clip-mid-home">
-        <path d="
-      M-50 640
-      C100 540 240 305 360 280
-      C500 250 670 545 790 640
-      C850 520 840 275 960 250
-      C1100 220 1250 545 1360 640
-      Z" />
-      </clipPath>
-      <clipPath id="mountain-clip-near-home">
-        <path d="
-      M-10 650
-      C130 550 270 275 400 250
-      C550 220 710 555 830 650
-      C900 530 900 280 1040 255
-      C1180 225 1310 555 1400 650
-      Z" />
-      </clipPath>
-      <linearGradient id="mountain-grad-far-home" x1="0.2" y1="0" x2="0.7" y2="1">
-        <stop class="mountain-stop--mid" offset="0%" />
-        <stop class="mountain-stop--base" offset="70%" />
-        <stop class="mountain-stop--base" offset="100%" />
-      </linearGradient>
-      <linearGradient id="mountain-grad-mid-home" x1="0.16" y1="0" x2="0.78" y2="1">
-        <stop class="mountain-stop--peak" offset="0%" />
-        <stop class="mountain-stop--mid" offset="34%" />
-        <stop class="mountain-stop--base" offset="100%" />
-      </linearGradient>
-      <linearGradient id="mountain-grad-near-home" x1="0.18" y1="0" x2="0.72" y2="1">
-        <stop class="mountain-stop--peak" offset="0%" />
-        <stop class="mountain-stop--mid" offset="26%" />
-        <stop class="mountain-stop--base" offset="58%" />
-        <stop class="mountain-stop--base" offset="100%" />
-      </linearGradient>
-      <linearGradient id="mountain-shade-far-home" x1="0" y1="0.1" x2="1" y2="0.7">
-        <stop class="mountain-stop--shade" offset="0%" />
-        <stop offset="48%" stop-color="transparent" />
-      </linearGradient>
-      <linearGradient id="mountain-shade-mid-home" x1="0" y1="0.05" x2="1" y2="0.7">
-        <stop class="mountain-stop--shade" offset="0%" />
-        <stop offset="50%" stop-color="transparent" />
-      </linearGradient>
-      <linearGradient id="mountain-shade-near-home" x1="0" y1="0.05" x2="1" y2="0.7">
-        <stop class="mountain-stop--shade" offset="0%" />
-        <stop offset="52%" stop-color="transparent" />
-      </linearGradient>
-      <linearGradient id="mountain-lit-far-home" x1="0.2" y1="0" x2="1" y2="0.85">
-        <stop class="mountain-stop--lit" offset="0%" />
-        <stop offset="38%" stop-color="transparent" />
-      </linearGradient>
-      <linearGradient id="mountain-lit-mid-home" x1="0.15" y1="0" x2="0.95" y2="0.9">
-        <stop class="mountain-stop--lit" offset="0%" />
-        <stop offset="40%" stop-color="transparent" />
-      </linearGradient>
-      <linearGradient id="mountain-lit-near-home" x1="0.15" y1="0" x2="0.95" y2="0.9">
-        <stop class="mountain-stop--lit" offset="0%" />
-        <stop offset="42%" stop-color="transparent" />
-      </linearGradient>
-      <radialGradient id="mountain-haze-far-home" cx="50%" cy="100%" r="70%">
-        <stop class="mountain-stop--haze" offset="0%" />
-        <stop offset="65%" stop-color="transparent" />
-      </radialGradient>
-      <radialGradient id="mountain-haze-mid-home" cx="48%" cy="100%" r="62%">
-        <stop class="mountain-stop--haze" offset="0%" />
-        <stop offset="70%" stop-color="transparent" />
-      </radialGradient>
-      <radialGradient id="mountain-haze-near-home" cx="48%" cy="100%" r="62%">
-        <stop class="mountain-stop--haze" offset="0%" />
-        <stop offset="70%" stop-color="transparent" />
-      </radialGradient>
-      <filter id="mountain-grain-far-home" x="-8%" y="-8%" width="116%" height="116%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.22" numOctaves="2" seed="3" result="n" />
-        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0" />
-      </filter>
-      <filter id="mountain-grain-mid-home" x="-8%" y="-8%" width="116%" height="116%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.28" numOctaves="3" seed="5" result="n" />
-        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.45 0" />
-      </filter>
-      <filter id="mountain-grain-near-home" x="-8%" y="-8%" width="116%" height="116%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.32" numOctaves="3" seed="8" result="n" />
-        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0" />
-      </filter>
-            <linearGradient id="meadow-grad-home" x1="0" y1="0" x2="0" y2="1">
-        <stop class="meadow-stop--far" offset="0%" />
-        <stop class="meadow-stop--near" offset="100%" />
-      </linearGradient>
-    </defs>
-    <!-- Layered jagged range: far haze, mid peaks, near cluster on the left.
-         xMaxYMax: on narrow phones crop the left mountains, keep cabin + Glen. -->
-    <g class="mountain mountain--far">
-      <g clip-path="url(#mountain-clip-far-home)">
-        <path class="mountain__body" fill="url(#mountain-grad-far-home)" d="
-      M-70 630
-      C60 540 170 385 260 365
-      C360 340 490 555 620 630
-      C680 530 700 355 760 340
-      C850 320 1010 545 1140 630
-      C1200 530 1230 390 1300 375
-      C1400 350 1510 555 1580 630
-      Z" />
-        <path class="mountain__shade" fill="url(#mountain-shade-far-home)" d="
-      M-70 630
-      C60 540 170 385 260 365
-      C360 340 490 555 620 630
-      C680 530 700 355 760 340
-      C850 320 1010 545 1140 630
-      C1200 530 1230 390 1300 375
-      C1400 350 1510 555 1580 630
-      Z" />
-        <path class="mountain__lit" fill="url(#mountain-lit-far-home)" d="
-      M-70 630
-      C60 540 170 385 260 365
-      C360 340 490 555 620 630
-      C680 530 700 355 760 340
-      C850 320 1010 545 1140 630
-      C1200 530 1230 390 1300 375
-      C1400 350 1510 555 1580 630
-      Z" />
-        <path class="mountain__haze" fill="url(#mountain-haze-far-home)" d="
-      M-70 630
-      C60 540 170 385 260 365
-      C360 340 490 555 620 630
-      C680 530 700 355 760 340
-      C850 320 1010 545 1140 630
-      C1200 530 1230 390 1300 375
-      C1400 350 1510 555 1580 630
-      Z" />
-        <path class="mountain__grain" filter="url(#mountain-grain-far-home)" d="
-      M-70 630
-      C60 540 170 385 260 365
-      C360 340 490 555 620 630
-      C680 530 700 355 760 340
-      C850 320 1010 545 1140 630
-      C1200 530 1230 390 1300 375
-      C1400 350 1510 555 1580 630
-      Z" />
-      </g>
-    </g>
-    <g class="mountain mountain--mid">
-      <g clip-path="url(#mountain-clip-mid-home)">
-        <path class="mountain__body" fill="url(#mountain-grad-mid-home)" d="
-      M-50 640
-      C100 540 240 305 360 280
-      C500 250 670 545 790 640
-      C850 520 840 275 960 250
-      C1100 220 1250 545 1360 640
-      Z" />
-        <path class="mountain__shade" fill="url(#mountain-shade-mid-home)" d="
-      M-50 640
-      C100 540 240 305 360 280
-      C500 250 670 545 790 640
-      C850 520 840 275 960 250
-      C1100 220 1250 545 1360 640
-      Z" />
-        <path class="mountain__lit" fill="url(#mountain-lit-mid-home)" d="
-      M-50 640
-      C100 540 240 305 360 280
-      C500 250 670 545 790 640
-      C850 520 840 275 960 250
-      C1100 220 1250 545 1360 640
-      Z" />
-        <path class="mountain__haze" fill="url(#mountain-haze-mid-home)" d="
-      M-50 640
-      C100 540 240 305 360 280
-      C500 250 670 545 790 640
-      C850 520 840 275 960 250
-      C1100 220 1250 545 1360 640
-      Z" />
-        <path class="mountain__ridge mountain__ridge--soft" d="
-          M360 280
-          C240 305 100 540 -50 640
-          L140 640
-          C110 540 250 330 360 280
-          Z" />
-        <path class="mountain__ridge mountain__ridge--soft" d="
-          M960 250
-          C840 275 850 520 790 640
-          L920 640
-          C910 530 920 300 960 250
-          Z" />
-        <path class="mountain__grain" filter="url(#mountain-grain-mid-home)" d="
-      M-50 640
-      C100 540 240 305 360 280
-      C500 250 670 545 790 640
-      C850 520 840 275 960 250
-      C1100 220 1250 545 1360 640
-      Z" />
-      </g>
-    </g>
-    <g class="mountain mountain--near">
-      <g clip-path="url(#mountain-clip-near-home)">
-        <path class="mountain__body" fill="url(#mountain-grad-near-home)" d="
-      M-10 650
-      C130 550 270 275 400 250
-      C550 220 710 555 830 650
-      C900 530 900 280 1040 255
-      C1180 225 1310 555 1400 650
-      Z" />
-        <path class="mountain__shade" fill="url(#mountain-shade-near-home)" d="
-      M-10 650
-      C130 550 270 275 400 250
-      C550 220 710 555 830 650
-      C900 530 900 280 1040 255
-      C1180 225 1310 555 1400 650
-      Z" />
-        <path class="mountain__lit" fill="url(#mountain-lit-near-home)" d="
-      M-10 650
-      C130 550 270 275 400 250
-      C550 220 710 555 830 650
-      C900 530 900 280 1040 255
-      C1180 225 1310 555 1400 650
-      Z" />
-        <path class="mountain__haze" fill="url(#mountain-haze-near-home)" d="
-      M-10 650
-      C130 550 270 275 400 250
-      C550 220 710 555 830 650
-      C900 530 900 280 1040 255
-      C1180 225 1310 555 1400 650
-      Z" />
-        <path class="mountain__ridge" d="
-          M400 250
-          C270 275 130 550 -10 650
-          L160 650
-          C120 550 270 300 400 250
-          Z" />
-        <path class="mountain__ridge mountain__ridge--soft" d="
-          M1040 255
-          C900 280 900 530 830 650
-          L970 650
-          C960 530 980 300 1040 255
-          Z" />
-        <path class="mountain__grain" filter="url(#mountain-grain-near-home)" d="
-      M-10 650
-      C130 550 270 275 400 250
-      C550 220 710 555 830 650
-      C900 530 900 280 1040 255
-      C1180 225 1310 555 1400 650
-      Z" />
-      </g>
-    </g>
-
-    <!-- Meadow — one rolling mass, far→near as a vertical gradient. -->
-    <path class="meadow" fill="url(#meadow-grad-home)" d="M-40 575C200 540 400 558 640 545 900 530 1120 548 1480 555V760H-40Z" />
-
-    <!-- Meadow life: rumput tipis + bunga.
-         Night: bunga pink/ungu. Day: ganti bunga matahari. -->
-    <g class="meadow-life">
-      <g class="meadow-grass">
-        <g transform="translate(8 636)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c6-12 7-26 4-38M0 0c2-10-2-21-8-31M0 0c8-8 13-18 16-28" /></g></g>
-        <g transform="translate(18 644)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c8-16 10-34 7-49M0 0c3-14 0-31-10-44M0 0c10-11 18-24 22-39M0 0c-8-10-14-22-16-34" /></g></g>
-        <g transform="translate(32 652)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c4-9 5-19 3-28M0 0c1-8-1-16-6-23M0 0c6-7 10-14 12-22" /></g></g>
-        <g transform="translate(46 632)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c6-13 7-28 4-40M0 0c2-11-2-23-8-33M0 0c8-9 14-19 16-30" /></g></g>
-        <g transform="translate(56 642)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c7-14 8-29 6-42M0 0c2-12 0-24-7-35M0 0c9-10 15-20 18-32" /></g></g>
-        <g transform="translate(68 650)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c5-10 6-22 3-32M0 0c2-9-1-18-7-26M0 0c7-8 12-16 14-25" /></g></g>
-        <g transform="translate(80 624)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c8-16 10-33 7-47M0 0c3-13 0-28-9-40M0 0c10-11 17-23 21-36" /></g></g>
-        <g transform="translate(92 636)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c9-17 11-35 8-50M0 0c3-14 0-31-10-44M0 0c10-11 18-24 22-39" /></g></g>
-        <g transform="translate(105 648)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c5-11 6-23 4-33M0 0c2-9-1-19-7-27M0 0c7-8 12-16 15-26" /></g></g>
-        <g transform="translate(118 620)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c8-16 10-34 7-49M0 0c3-14 0-30-9-43M0 0c10-11 17-24 20-38" /></g></g>
-        <g transform="translate(130 636)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c6-12 7-26 4-37M0 0c2-10-1-21-8-30M0 0c8-8 14-17 17-27" /></g></g>
-        <g transform="translate(140 642)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c7-14 9-30 6-43M0 0c3-12 0-25-8-36M0 0c9-10 15-21 19-33M0 0c-6-9-11-20-12-31" /></g></g>
-        <g transform="translate(154 616)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c7-15 9-32 6-46M0 0c3-13-1-27-9-38M0 0c10-11 18-23 21-36" /></g></g>
-        <g transform="translate(166 628)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c6-13 7-28 4-40M0 0c2-11-2-23-8-33M0 0c8-9 14-19 16-30" /></g></g>
-        <g transform="translate(176 644)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c5-10 6-22 3-32M0 0c2-9-1-18-7-26M0 0c7-8 12-16 14-25" /></g></g>
-        <g transform="translate(188 648)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c8-15 10-31 7-45M0 0c2-12-1-26-9-37M0 0c10-10 17-22 21-34" /></g></g>
-        <g transform="translate(200 622)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c8-16 10-34 7-48M0 0c3-14 0-30-9-42M0 0c10-11 17-24 21-38" /></g></g>
-        <g transform="translate(214 634)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c9-17 11-35 8-50M0 0c3-14 0-31-10-44M0 0c10-11 18-24 22-39" /></g></g>
-        <g transform="translate(226 650)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c5-11 6-23 3-33M0 0c1-9-2-18-7-26M0 0c8-8 13-16 15-25" /></g></g>
-        <g transform="translate(238 618)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c5-10 6-22 3-32M0 0c2-9-1-18-7-26M0 0c7-8 12-16 14-25" /></g></g>
-        <g transform="translate(250 636)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c7-14 8-29 5-41M0 0c2-12-1-24-8-34M0 0c9-9 15-20 18-31" /></g></g>
-        <g transform="translate(262 640)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c8-15 10-32 7-46M0 0c3-13 0-27-9-38M0 0c10-10 18-22 22-35M0 0c-7-10-12-21-14-33" /></g></g>
-        <g transform="translate(274 652)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c4-9 5-19 3-28M0 0c1-8-1-16-6-23M0 0c6-7 10-14 12-22" /></g></g>
-        <g transform="translate(286 626)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c6-13 7-28 4-40M0 0c2-11-2-23-8-33M0 0c8-9 14-19 16-30" /></g></g>
-        <g transform="translate(298 642)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c8-15 9-31 6-44M0 0c2-13-1-26-9-37M0 0c10-10 17-22 20-34" /></g></g>
-        <g transform="translate(310 646)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c8-16 10-34 7-49M0 0c3-14 0-30-9-43M0 0c10-11 17-24 20-38" /></g></g>
-        <g transform="translate(322 620)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c6-12 7-26 4-38M0 0c2-10-2-22-8-32M0 0c8-9 14-18 16-28" /></g></g>
-        <g transform="translate(334 630)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c7-14 8-29 5-42M0 0c2-11-1-23-8-33M0 0c9-9 16-20 19-31" /></g></g>
-        <g transform="translate(346 648)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c5-10 6-22 3-32M0 0c2-9-1-18-7-26M0 0c7-8 12-16 14-25" /></g></g>
-        <g transform="translate(358 650)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c5-10 6-22 3-32M0 0c2-9-1-18-7-26M0 0c7-8 12-16 14-25" /></g></g>
-        <g transform="translate(370 634)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c8-16 10-33 7-47M0 0c3-13 0-28-9-40M0 0c10-11 17-23 21-36" /></g></g>
-        <g transform="translate(382 622)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c8-15 9-31 6-44M0 0c2-13-2-26-9-37M0 0c10-10 17-22 21-34" /></g></g>
-        <g transform="translate(394 644)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c6-12 7-26 4-37M0 0c2-10-1-21-8-30M0 0c8-8 14-17 17-27" /></g></g>
-        <g transform="translate(406 638)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c9-16 11-33 7-48M0 0c3-13-1-27-10-39M0 0c12-11 20-23 24-37" /></g></g>
-        <g transform="translate(418 618)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c7-14 8-29 5-41M0 0c2-12-1-24-8-34M0 0c9-9 15-20 18-31" /></g></g>
-        <g transform="translate(430 648)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c6-12 7-26 4-37M0 0c2-10-1-21-8-30M0 0c8-8 14-17 17-27" /></g></g>
-        <g transform="translate(442 632)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c5-11 6-23 4-33M0 0c2-9-1-19-7-27M0 0c7-8 12-16 15-26" /></g></g>
-        <g transform="translate(454 624)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c8-16 10-34 7-49M0 0c3-14 0-31-10-44M0 0c10-11 18-24 22-39" /></g></g>
-        <g transform="translate(466 650)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c4-9 5-19 3-28M0 0c1-8-1-16-6-23M0 0c6-7 10-14 12-22" /></g></g>
-        <g transform="translate(478 640)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c7-14 9-30 6-43M0 0c3-12 0-25-8-36M0 0c9-10 15-21 19-33" /></g></g>
-        <g transform="translate(490 616)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c8-15 10-32 7-46M0 0c3-13 0-27-9-38M0 0c10-10 18-22 22-35" /></g></g>
-        <g transform="translate(502 628)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c5-11 6-24 4-34M0 0c2-10-1-20-7-29M0 0c8-8 13-18 16-27" /></g></g>
-        <g transform="translate(514 644)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c6-13 7-28 4-40M0 0c2-11-2-23-8-33M0 0c8-9 14-19 16-30" /></g></g>
-        <g transform="translate(526 646)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c6-13 7-28 4-40M0 0c2-11-2-23-8-33M0 0c8-9 14-19 16-30" /></g></g>
-        <g transform="translate(540 630)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c7-14 8-29 5-42M0 0c2-11-1-23-8-33M0 0c9-9 16-20 19-31" /></g></g>
-        <g transform="translate(580 634)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c6-12 7-26 4-37M0 0c2-10-1-21-8-30M0 0c8-8 14-17 17-27" /></g></g>
-        <g transform="translate(656 642)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c5-10 6-22 3-32M0 0c2-9-1-18-7-26M0 0c7-8 12-16 14-25" /></g></g>
-        <g transform="translate(876 626)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c7-14 8-29 5-42M0 0c2-11-1-23-8-33M0 0c9-9 16-20 19-31" /></g></g>
-        <g transform="translate(1128 620)"><g class="grass-tuft grass-tuft--b"><path d="M0 0c9-16 11-33 7-48M0 0c3-13-1-27-10-39M0 0c12-11 20-23 24-37" /></g></g>
-        <g transform="translate(1240 640)"><g class="grass-tuft grass-tuft--c"><path d="M0 0c5-10 6-22 3-32M0 0c2-9-1-18-7-26M0 0c7-8 12-16 14-25" /></g></g>
-        <g transform="translate(1302 632)"><g class="grass-tuft grass-tuft--a"><path d="M0 0c6-12 7-26 4-37M0 0c2-10-1-21-8-30M0 0c8-8 14-17 17-27" /></g></g>
-      </g>
-
-      <g class="meadow-flowers meadow-flowers--moon">
-        <g class="flower flower--moon flower--alt flower--cluster" transform="translate(96 636)">
-          <path class="flower__stem" d="M0 0C-3-14-1-28 1-40" />
-          <circle class="flower__core" cx="1" cy="-42" r="2.8" />
-          <circle class="flower__petal flower__petal--a" cx="1" cy="-47.4" r="2.6" />
-          <circle class="flower__petal flower__petal--b" cx="5.6" cy="-44.7" r="2.6" />
-          <circle class="flower__petal flower__petal--c" cx="4.3" cy="-39.2" r="2.6" />
-          <circle class="flower__petal flower__petal--d" cx="-2.3" cy="-39.2" r="2.6" />
-          <circle class="flower__petal flower__petal--e" cx="-3.6" cy="-44.7" r="2.6" />
-        </g>
-        <g class="flower flower--moon flower--cluster" transform="translate(144 638)">
-          <path class="flower__stem" d="M0 0C2-12 3-26 0-38" />
-          <circle class="flower__core" cx="0" cy="-40" r="2.7" />
-          <circle class="flower__petal flower__petal--a" cx="0" cy="-45" r="2.5" />
-          <circle class="flower__petal flower__petal--b" cx="4.4" cy="-42.4" r="2.5" />
-          <circle class="flower__petal flower__petal--c" cx="3.4" cy="-37.2" r="2.5" />
-          <circle class="flower__petal flower__petal--d" cx="-3.4" cy="-37.2" r="2.5" />
-          <circle class="flower__petal flower__petal--e" cx="-4.4" cy="-42.4" r="2.5" />
-        </g>
-        <g class="flower flower--moon" transform="translate(200 648)">
-          <path class="flower__stem" d="M0 0C2-16 1-32 -1-46" />
-          <circle class="flower__core" cx="-1" cy="-48" r="3.2" />
-          <circle class="flower__petal flower__petal--a" cx="-1" cy="-54" r="3" />
-          <circle class="flower__petal flower__petal--b" cx="4.2" cy="-50.8" r="3" />
-          <circle class="flower__petal flower__petal--c" cx="2.9" cy="-44.3" r="3" />
-          <circle class="flower__petal flower__petal--d" cx="-4.9" cy="-44.3" r="3" />
-          <circle class="flower__petal flower__petal--e" cx="-6.2" cy="-50.8" r="3" />
-        </g>
-        <g class="flower flower--moon flower--alt" transform="translate(560 648)">
-          <path class="flower__stem" d="M0 0C3-14 4-30 1-44" />
-          <circle class="flower__core" cx="1" cy="-46" r="3.4" />
-          <circle class="flower__petal flower__petal--a" cx="1" cy="-52.4" r="3.2" />
-          <circle class="flower__petal flower__petal--b" cx="6.6" cy="-49.2" r="3.2" />
-          <circle class="flower__petal flower__petal--c" cx="5.2" cy="-41.9" r="3.2" />
-          <circle class="flower__petal flower__petal--d" cx="-3.2" cy="-41.9" r="3.2" />
-          <circle class="flower__petal flower__petal--e" cx="-4.6" cy="-49.2" r="3.2" />
-        </g>
-        <g class="flower flower--moon" transform="translate(980 648)">
-          <path class="flower__stem" d="M0 0C1-15 2-30 -1-44" />
-          <circle class="flower__core" cx="-1" cy="-46" r="3.1" />
-          <circle class="flower__petal flower__petal--a" cx="-1" cy="-51.8" r="2.9" />
-          <circle class="flower__petal flower__petal--b" cx="4" cy="-48.8" r="2.9" />
-          <circle class="flower__petal flower__petal--c" cx="2.7" cy="-42.5" r="2.9" />
-          <circle class="flower__petal flower__petal--d" cx="-4.7" cy="-42.5" r="2.9" />
-          <circle class="flower__petal flower__petal--e" cx="-6" cy="-48.8" r="2.9" />
-        </g>
-        <g class="flower flower--moon flower--alt" transform="translate(1248 648)">
-          <path class="flower__stem" d="M0 0C2-13 3-28 0-42" />
-          <circle class="flower__core" cx="0" cy="-44" r="3.1" />
-          <circle class="flower__petal flower__petal--a" cx="0" cy="-49.8" r="2.9" />
-          <circle class="flower__petal flower__petal--b" cx="5" cy="-46.8" r="2.9" />
-          <circle class="flower__petal flower__petal--c" cx="3.7" cy="-40.5" r="2.9" />
-          <circle class="flower__petal flower__petal--d" cx="-3.7" cy="-40.5" r="2.9" />
-          <circle class="flower__petal flower__petal--e" cx="-5" cy="-46.8" r="2.9" />
-        </g>
-      </g>
-
-      <g class="meadow-flowers meadow-flowers--sun">
-        <g class="flower flower--sun flower--cluster" transform="translate(104 636)">
-          <path class="flower__stem" d="M0 0C-2-14 0-28 1-40" />
-          <circle class="flower__core" cx="1" cy="-42" r="3.2" />
-          <circle class="flower__petal flower__petal--a" cx="1" cy="-48" r="3" />
-          <circle class="flower__petal flower__petal--b" cx="6.1" cy="-44.9" r="3" />
-          <circle class="flower__petal flower__petal--c" cx="4.5" cy="-38.9" r="3" />
-          <circle class="flower__petal flower__petal--d" cx="-2.5" cy="-38.9" r="3" />
-          <circle class="flower__petal flower__petal--e" cx="-4.1" cy="-44.9" r="3" />
-        </g>
-        <g class="flower flower--sun flower--cluster" transform="translate(162 638)">
-          <path class="flower__stem" d="M0 0C3-12 3-26 0-36" />
-          <circle class="flower__core" cx="0" cy="-38" r="3" />
-          <circle class="flower__petal flower__petal--a" cx="0" cy="-43.6" r="2.8" />
-          <circle class="flower__petal flower__petal--b" cx="5" cy="-40.8" r="2.8" />
-          <circle class="flower__petal flower__petal--c" cx="3.7" cy="-35.5" r="2.8" />
-          <circle class="flower__petal flower__petal--d" cx="-3.7" cy="-35.5" r="2.8" />
-          <circle class="flower__petal flower__petal--e" cx="-5" cy="-40.8" r="2.8" />
-        </g>
-        <g class="flower flower--sun" transform="translate(220 648)">
-          <path class="flower__stem" d="M0 0C2-16 1-32 -1-46" />
-          <circle class="flower__core" cx="-1" cy="-48" r="3.6" />
-          <circle class="flower__petal flower__petal--a" cx="-1" cy="-54.6" r="3.2" />
-          <circle class="flower__petal flower__petal--b" cx="4.8" cy="-51.1" r="3.2" />
-          <circle class="flower__petal flower__petal--c" cx="3.2" cy="-43.8" r="3.2" />
-          <circle class="flower__petal flower__petal--d" cx="-5.2" cy="-43.8" r="3.2" />
-          <circle class="flower__petal flower__petal--e" cx="-6.8" cy="-51.1" r="3.2" />
-        </g>
-        <g class="flower flower--sun" transform="translate(624 648)">
-          <path class="flower__stem" d="M0 0C2-14 3-28 0-42" />
-          <circle class="flower__core" cx="0" cy="-44" r="3.4" />
-          <circle class="flower__petal flower__petal--a" cx="0" cy="-50.2" r="3" />
-          <circle class="flower__petal flower__petal--b" cx="5.4" cy="-47" r="3" />
-          <circle class="flower__petal flower__petal--c" cx="4" cy="-40.1" r="3" />
-          <circle class="flower__petal flower__petal--d" cx="-4" cy="-40.1" r="3" />
-          <circle class="flower__petal flower__petal--e" cx="-5.4" cy="-47" r="3" />
-        </g>
-        <g class="flower flower--sun" transform="translate(1028 648)">
-          <path class="flower__stem" d="M0 0C1-14 2-30 0-44" />
-          <circle class="flower__core" cx="0" cy="-46" r="3.4" />
-          <circle class="flower__petal flower__petal--a" cx="0" cy="-52.2" r="3" />
-          <circle class="flower__petal flower__petal--b" cx="5.4" cy="-49" r="3" />
-          <circle class="flower__petal flower__petal--c" cx="4" cy="-42.1" r="3" />
-          <circle class="flower__petal flower__petal--d" cx="-4" cy="-42.1" r="3" />
-          <circle class="flower__petal flower__petal--e" cx="-5.4" cy="-49" r="3" />
-        </g>
-      </g>
-    </g>
-
-    <!-- Campsite: cabin set back, fire further out, Glen sitting by the flames -->
-    <g class="camp" transform="translate(780 490) scale(1.05)">
-      <ellipse class="camp__glow" cx="240" cy="155" rx="180" ry="30" />
-
-      <g class="pine" transform="translate(-76 -18) scale(1.52)">
-        <rect class="pine__trunk" x="18" y="68" width="8" height="30" rx="4" />
-        <ellipse class="pine__leaf pine__leaf--low" cx="22" cy="62" rx="22" ry="20" />
-        <ellipse class="pine__leaf pine__leaf--mid" cx="22" cy="44" rx="17" ry="18" />
-        <ellipse class="pine__leaf" cx="22" cy="26" rx="13" ry="16" />
-      </g>
-      <g class="pine pine--small" transform="translate(416 -4) scale(1.28)">
-        <rect class="pine__trunk" x="18" y="68" width="8" height="30" rx="4" />
-        <ellipse class="pine__leaf pine__leaf--low" cx="22" cy="62" rx="22" ry="20" />
-        <ellipse class="pine__leaf pine__leaf--mid" cx="22" cy="44" rx="17" ry="18" />
-        <ellipse class="pine__leaf" cx="22" cy="26" rx="13" ry="16" />
-      </g>
-
-      <!-- Kabin diperbesar ~1.45x agar proporsional terhadap Glen -->
-      <g class="cabin" transform="translate(0 -60) scale(1.45)">
-        <path class="cabin__side" d="M110 55l42-18v78l-42 18Z" />
-        <path class="cabin__wall" d="M10 55h100v78H10Z" />
-        <path class="cabin__shade" d="M10 55h36v78H10Z" />
-        <path class="cabin__roof-side" d="M110 55 70 8l42-18 40 47Z" />
-        <path class="cabin__roof" d="M0 55 70 8l40 47H0Z" />
-        <path class="cabin__roof-lit" d="M70 8 110 55H70Z" />
-        <path class="cabin__chimney" d="M128 12h14v30h-14Z" />
-        <rect class="cabin__door" x="48" y="82" width="26" height="51" rx="2" />
-        <circle class="cabin__knob" cx="68" cy="108" r="2" />
-        <g class="cabin__window cabin__window--lit" transform="translate(18 78)">
-          <rect width="22" height="22" rx="2" />
-          <path d="M11 0v22M0 11h22" />
-        </g>
-        <g class="cabin__window cabin__window--lit" transform="translate(122 78) skewY(-22)">
-          <rect width="18" height="20" rx="2" />
-        </g>
-        <circle class="smoke smoke--1" cx="135" cy="4" r="5" />
-        <circle class="smoke smoke--2" cx="140" cy="-8" r="3.5" />
-        <circle class="smoke smoke--3" cx="136" cy="-18" r="2.5" />
-      </g>
-
-      <!-- Campfire further in front of the cabin -->
-      <g class="fire" transform="translate(230 150)">
-        <ellipse class="fire__ember" cx="24" cy="20" rx="30" ry="10" />
-        <path class="fire__log fire__log--a" d="M0 14h48l3 9H3Z" />
-        <path class="fire__log fire__log--b" d="M4 8 48 18l-2 8L2 15Z" />
-        <g class="flame">
-          <path class="flame__outer" d="M24 16c-9 0-15-13-9-22 0 7 6 9 9 4 2 7 8 11 11 6 1 9-3 16-11 12Z" />
-          <path class="flame__mid" d="M24 14c-5 0-9-9-5-14 0 4 4 5 5 2 2 5 5 8 7 4 1 6-2 10-7 8Z" />
-          <path class="flame__core" d="M24 13c-2.5 0-4-5-2-8.5 0 2.5 2 3 2 1 1 2.5 2.5 4.5 3.5 2.5 0.5 3.5-1 6.5-3.5 5Z" />
-        </g>
-        <!-- Day mode: flames hide, white smoke rises from the pit -->
-        <g class="fire__smoke" aria-hidden="true">
-          <circle class="fire-smoke fire-smoke--1" cx="18" cy="6" r="6" />
-          <circle class="fire-smoke fire-smoke--2" cx="30" cy="-2" r="5" />
-          <circle class="fire-smoke fire-smoke--3" cx="22" cy="-12" r="4" />
-        </g>
-      </g>
-
-      <!-- Glen 3D slot — canvas overlay is positioned from this rect -->
-      <g class="glen" transform="translate(258 92)" aria-label="Glen sitting by the campfire">
-        <rect class="glen__slot" width="150" height="92" fill="none" />
-        <image class="glen-placeholder" href="images/glen.png" width="150" height="92" preserveAspectRatio="xMidYMax meet" />
-      </g>
-    </g>
-
-  </svg>
-
-    <div class="shooting-star" id="shooting-star"></div>
-</div>
-
-<!-- Canvas Glen di luar .sky supaya tidak ikut ter-scale blur saat zoom -->
-<canvas class="glen-canvas glen-canvas--scene" data-glen-model="scene" aria-hidden="true"></canvas>
-
-<a class="skip-link" href="#main">Skip to main content</a>
-
-<header class="site-header">
-  <a class="brand" href="#home" id="brand-home">
-    <span class="brand__name">Glen<span class="brand__dot">.</span></span>
-  </a>
-
-  <nav class="site-nav" aria-label="Primary navigation">
-    <a href="#apps" data-route="apps">My Apps</a>
-    <button
-      type="button"
-      class="theme-toggle"
-      id="theme-toggle"
-      aria-pressed="false"
-      aria-label="Switch to day mode"
-      title="Switch to day mode"
-    >
-      <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 4.5A8.5 8.5 0 1 0 19.5 16 7 7 0 0 1 16 4.5Z" />
-        </svg>
-      </span>
-      <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="4.5" />
-          <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M19.4 4.6l-1.8 1.8M6.4 17.6l-1.8 1.8" />
-        </svg>
-      </span>
+<a class="skip-link" href="#main">Skip to the story</a>
+<header class="masthead">
+  <nav class="island" aria-label="The Book of Glen">
+    <button type="button" class="island__pill" aria-expanded="false" aria-controls="island-panel">
+      <span class="island__seal" aria-hidden="true">G</span>
+      <span class="island__where"><span class="island__part">The Book of</span><span class="island__title">Glen</span></span>
+      <span class="island__folio" aria-hidden="true"></span>
+      <span class="island__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="visually-hidden">Open the chapters</span>
     </button>
-    <a href="#contact" class="site-nav__cta" data-route="contact">Contact</a>
+    <div class="island__panel" id="island-panel">
+      <div class="island__inner">
+      <ol class="island__chapters">
+        <li><a href="/" aria-current="page"><span class="island__no">Front</span><strong>Cover</strong><span class="island__sub">The closed book</span></a></li>
+        <li><a href="/#prologue"><span class="island__no">Intro</span><strong>Prologue</strong><span class="island__sub">Who is Glen?</span><span class="island__pg">p.&nbsp;1</span></a></li>
+        <li><a href="/me/"><span class="island__no">I</span><strong>Me</strong><span class="island__sub">The long version</span><span class="island__pg">p.&nbsp;3</span></a></li>
+        <li><a href="/work/"><span class="island__no">II</span><strong>Work</strong><span class="island__sub">Seven stories</span><span class="island__pg">p.&nbsp;11</span></a></li>
+        <li><a href="/playground/"><span class="island__no">III</span><strong>Playground</strong><span class="island__sub">Four tiny apps</span><span class="island__pg">p.&nbsp;27</span></a></li>
+        <li><a href="/hire-me/"><span class="island__no">Epilogue</span><strong>Hire Me</strong><span class="island__sub">Your chapter</span><span class="island__pg">p.&nbsp;37</span></a></li>
+      </ol>
+      <div class="island__foot">
+        <button type="button" class="island__toc" data-open-contents aria-haspopup="dialog">
+          <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#book-open"/></svg>Full contents
+        </button>
+      </div>
+      </div>
+    </div>
+    <span class="island__read" aria-hidden="true"></span>
   </nav>
 </header>
+<main id="main" class="chapter" data-page="home" data-ink="blue" data-folio="1" data-next="/me/" data-pose="sit" data-say="Psst. This whole book is about me. Go on, open it.">
 
-<main id="main">
+  <section class="desk" data-beat data-pose="sit" data-say="Psst. This whole book is about me. Go on, open it." aria-labelledby="cover-title">
+    <div class="desk__glow" aria-hidden="true"></div>
 
-  <section class="hero" id="home">
-    <p class="eyebrow">Tech Geek · Software Developer · Indonesia</p>
-    <h1 class="hero__title">
-      Glen Rynaldy Hermanus
-    </h1>
-    <!-- <p class="hero__lead">
-      I design and build mobile apps with a focus on clarity, performance,
-      and experiences that feel comfortable every day.
-    </p> -->
-    <div class="hero__actions">
-      <a class="btn btn--primary" href="#apps" data-route="apps">My Apps</a>
+    <div class="desk__sticky">
+    <div class="tome" data-tome>
+      <div class="tome__stage">
+        <div class="tome__book">
+          <div class="tome__back"></div>
+          <div class="tome__block" aria-hidden="true">
+            <div class="tome__edge tome__edge--fore"></div>
+            <div class="tome__edge tome__edge--tail"></div>
+          </div>
+          <div class="tome__cover">
+            <div class="tome__front">
+              <span class="tome__corner tome__corner--tl"></span>
+              <span class="tome__corner tome__corner--tr"></span>
+              <span class="tome__corner tome__corner--bl"></span>
+              <span class="tome__corner tome__corner--br"></span>
+              <p class="tome__series caps">A tale of a software engineer</p>
+              <h1 id="cover-title" class="tome__title">
+                <span class="tome__title-small">The Book of</span>
+                <span class="tome__title-big">Glen</span>
+              </h1>
+              <p class="tome__author caps">Glen Rynaldy Hermanus</p>
+            </div>
+            <div class="tome__inside" aria-hidden="true">
+              <div class="bookplate">
+                <p class="caps">Ex libris</p>
+                <strong>you, the reader</strong>
+                <p>Glen wrote this so you could meet him without booking a meeting.</p>
+              </div>
+            </div>
+          </div>
+          <div class="tome__strap" aria-hidden="true"><span class="tome__buckle"></span></div>
+        </div>
+      </div>
+      <div class="desk__glen" data-narrator-slot data-slot="desk"></div>
     </div>
 
-    
+    <div class="desk__cta">
+      <a class="btn btn--primary" href="#prologue" data-open-book>
+        Open the book
+        <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-right"/></svg>
+      </a>
+      <p class="cover-hint">or just scroll down</p>
+    </div>
+    </div>
   </section>
 
-  
+  <div class="spread" id="prologue">
+    <section class="page page--left" aria-labelledby="prologue-title">
+      <p class="runner caps">Prologue</p>
+      <h2 id="prologue-title" class="page-title display">Who is Glen?</h2>
+      <p class="lede">A developer from Indonesia who can&rsquo;t leave a problem alone. This is his book.</p>
+      <div class="narrator-slot" data-narrator-slot></div>
+      <p class="folio">1</p>
+    </section>
 
-  <!-- <section class="panel panel--wide" id="skills" aria-labelledby="skills-title">
-    <div class="panel__head">
-      <span class="tag">Skills</span>
-      <h2 id="skills-title">Where I focus my work.</h2>
-    </div>
+    <section class="page page--right" aria-label="The prologue">
+      <article class="beat" data-pose="wave" data-say="Hi! I&rsquo;m Glen. Welcome to my book.">
+        <figure class="plate">
+          <img src="/assets/img/chapters/prologue.webp" width="1200" height="900" loading="lazy" alt="Risograph illustration of a desk by an open window: a laptop full of code, a phone, a mug and palm trees outside.">
+        </figure>
+        <span class="beat__label caps">Page one</span>
+        <h2>Once upon a time, in Indonesia,</h2>
+        <div class="prose">
+          <p class="drop">There was a developer called Glen Rynaldy Hermanus. He builds apps for phones, desktops and the web, and he usually builds the whole thing: the server, the screens and the <mark class="hl">last little button</mark>.</p>
+        </div>
+      </article>
 
-    <ul class="cards">
-      <li class="card">
-        <span class="card__num">01</span>
-        <h3>Mobile Development</h3>
-        <p>
-          Building Android and iOS apps from a single codebase — from early concept
-          through to a release people can use every day.
-        </p>
-      </li>
-      <li class="card">
-        <span class="card__num">02</span>
-        <h3>Interface &amp; Interaction</h3>
-        <p>
-          Designing screens that feel clear and comfortable. Animation is used
-          sparingly, for the right feedback without getting in the way.
-        </p>
-      </li>
-      <li class="card">
-        <span class="card__num">03</span>
-        <h3>Exploration &amp; Automation</h3>
-        <p>
-          Side projects, scripts, and small tools that speed up the work —
-          born from a habit of asking what can be simplified.
-        </p>
-      </li>
-    </ul>
-  </section>
+      <article class="beat" data-pose="walk" data-say="I like owning the whole stack. Fewer handoffs, fewer surprises.">
+        <span class="beat__label caps">What he makes</span>
+        <h2>Apps people actually open.</h2>
+        <ul class="shelf">
+          <li><span class="shelf__k">Native mobile</span><span class="shelf__v">Kotlin with Jetpack Compose, Swift with SwiftUI</span></li>
+          <li><span class="shelf__k">Cross-platform</span><span class="shelf__v">Flutter, from a baby kick tracker to a padel club POS</span></li>
+          <li><span class="shelf__k">Backends &amp; agents</span><span class="shelf__v">Go services, PostgreSQL, WebSockets and AI agents</span></li>
+          <li><span class="shelf__k">Web dashboards</span><span class="shelf__v">Next.js, SvelteKit and Prisma</span></li>
+          <li><span class="shelf__k">Desktop</span><span class="shelf__v">SwiftUI on macOS, WinUI&nbsp;3 on Windows</span></li>
+          <li><span class="shelf__k">Automation</span><span class="shelf__v">n8n workflows that do the boring parts</span></li>
+        </ul>
+      </article>
 
-  <section class="cta" id="contact" aria-labelledby="contact-title">
-    <h2 id="contact-title">Let&rsquo;s talk about your idea.</h2>
-    <p>
-      Open to collaboration, new projects, or a conversation about technology
-      and digital products. Reach me by email anytime.
-    </p>
-    <div class="cta__actions">
-      <a class="btn btn--primary" href="mailto:halo@glenrh.web.app">halo@glenrh.web.app</a>
-      <a class="btn btn--ghost" href="https://github.com/glenrh" target="_blank" rel="noopener noreferrer">GitHub</a>
-    </div>
-  </section> -->
+      <article class="beat" data-pose="sit" data-say="Small problem first. Ship it. Then sweat the details.">
+        <span class="beat__label caps">How he works</span>
+        <h2>Three habits you&rsquo;ll see in every chapter.</h2>
+        <ol class="habits">
+          <li><div><h3>Start with one real problem.</h3><p>Not a platform, not a roadmap. One person, one annoying problem, today.</p></div></li>
+          <li><div><h3>Ship something you can hold.</h3><p>An APK on a phone, a link that opens, a build on a desk. Feedback beats opinions.</p></div></li>
+          <li><div><h3>Sweat the last ten percent.</h3><p>Empty states, motion, the tiny copy under a button. That&rsquo;s where <mark class="hl">trust</mark> lives.</p></div></li>
+        </ol>
+      </article>
 
+      <article class="beat" data-pose="walk" data-say="Pick a chapter. I&rsquo;ll walk you through it.">
+        <span class="beat__label caps">Inside this book</span>
+        <h2>Four chapters.</h2>
+        <ol class="stories">
+          <li data-ink="green">
+            <a class="story-link" href="/me/">
+              <svg class="story-link__arrow" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-right"/></svg>
+              <span class="story-link__thumb" aria-hidden="true"><svg class="icon"><use href="/assets/img/icons.svg#user"/></svg></span>
+              <span class="story-link__text">
+                <span class="story-link__title">Chapter One: Me <em>the long version</em></span>
+                <span class="story-link__meta">The road so far, how he thinks, what&rsquo;s in his bag</span>
+              </span>
+              <span class="story-link__no"><span class="visually-hidden">page</span>3</span>
+            </a>
+          </li>
+          <li data-ink="blue">
+            <a class="story-link" href="/work/">
+              <svg class="story-link__arrow" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-right"/></svg>
+              <span class="story-link__thumb" aria-hidden="true"><svg class="icon"><use href="/assets/img/icons.svg#briefcase"/></svg></span>
+              <span class="story-link__text">
+                <span class="story-link__title">Chapter Two: Work <em>seven stories</em></span>
+                <span class="story-link__meta">HRIS, MAVIS, ShtEV, Climaxx, Devant, Cineflow and a few short ones</span>
+              </span>
+              <span class="story-link__no"><span class="visually-hidden">page</span>11</span>
+            </a>
+          </li>
+          <li data-ink="green">
+            <a class="story-link" href="/playground/">
+              <svg class="story-link__arrow" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-right"/></svg>
+              <span class="story-link__thumb" aria-hidden="true"><svg class="icon"><use href="/assets/img/icons.svg#blocks"/></svg></span>
+              <span class="story-link__text">
+                <span class="story-link__title">Chapter Three: Playground <em>four tiny apps</em></span>
+                <span class="story-link__meta">Score a CV, order from a warung, charge a car, feed Glen</span>
+              </span>
+              <span class="story-link__no"><span class="visually-hidden">page</span>27</span>
+            </a>
+          </li>
+          <li data-ink="blue">
+            <a class="story-link" href="/hire-me/">
+              <svg class="story-link__arrow" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-right"/></svg>
+              <span class="story-link__thumb" aria-hidden="true"><svg class="icon"><use href="/assets/img/icons.svg#mail"/></svg></span>
+              <span class="story-link__text">
+                <span class="story-link__title">Epilogue: Hire Me <em>your chapter</em></span>
+                <span class="story-link__meta">Write Glen a letter about your project</span>
+              </span>
+              <span class="story-link__no"><span class="visually-hidden">page</span>37</span>
+            </a>
+          </li>
+        </ol>
+      </article>
+
+      <nav class="pager" aria-label="Turn the page">
+        <a rel="next" href="/me/">
+          <span class="caps">Next chapter <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-right"/></svg></span>
+          <strong>Chapter One: Me</strong>
+        </a>
+      </nav>
+      <p class="folio">2</p>
+    </section>
+    <div class="ribbon" aria-hidden="true"></div>
+  </div>
 </main>
 
-<!-- Board: panel yang naik dari bawah kanan saat zoom ke Glen -->
-<aside class="board" id="board" aria-hidden="true">
-  <button type="button" class="board__back" id="board-back">&larr; Back</button>
-
-  <div class="board__prop" id="board-apps" hidden>
-    <div class="apps-board">
-      <div class="apps-board__shade" aria-hidden="true"></div>
-      <p class="apps-board__label">Now shipping</p>
-      <ul class="apps-board__list">
-        <li>
-          <a
-            class="app-tile"
-            href="#"
-            onclick="return false;"
-          >
-            <span class="app-tile__eyebrow">Mobile Showcase &bull; Voice AI Order Agent</span>
-            <h2 class="app-tile__title">Mavis Warung — Voice AI Assistant for Warung & Store Stock</h2>
-            <span class="app-tile__url">Jetpack Compose &bull; Voice Order Processing & Local Sync</span>
-            <img src="images/mavis-warung.png" alt="Mavis Warung Mobile App" class="app-tile__img" />
-          </a>
-        </li>
-        <li>
-          <a
-            class="app-tile"
-            href="#"
-            onclick="return false;"
-          >
-            <span class="app-tile__eyebrow">Mobile Showcase &bull; B2B Distribution & Sales Force</span>
-            <h2 class="app-tile__title">DistriFlow ID — FMCG Field Sales & Order Automation</h2>
-            <span class="app-tile__url">Jetpack Compose &bull; Van Selling & Distribution</span>
-            <img src="images/distriflow.png" alt="DistriFlow ID Mobile App" class="app-tile__img" />
-          </a>
-        </li>
-        <li>
-          <a
-            class="app-tile"
-            href="#"
-            onclick="return false;"
-          >
-            <span class="app-tile__eyebrow">Mobile Showcase &bull; B2B Wholesale & Supply Chain</span>
-            <h2 class="app-tile__title">WarungFlow B2B — Wholesale Supply Chain Marketplace</h2>
-            <span class="app-tile__url">Jetpack Compose &bull; Factory-Direct FMCG</span>
-            <img src="images/warungflow.png" alt="WarungFlow B2B Mobile App" class="app-tile__img" />
-          </a>
-        </li>
-        <li>
-          <a
-            class="app-tile"
-            href="https://hris.glenrh.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span class="app-tile__eyebrow">HRIS</span>
-            <h2 class="app-tile__title">Automate CV Scoring for HRIS</h2>
-            <span class="app-tile__url">hris.glenrh.com</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="board__prop" id="board-contact" hidden>
-    <div class="id-card" aria-label="Profile ID card">
-      <div class="id-card__shade" aria-hidden="true"></div>
-      <header class="id-card__head">
-        <span class="id-card__badge">ID</span>
-        <p class="id-card__name">Glen Rynaldy Hermanus</p>
-      </header>
-      <dl class="id-card__fields">
-        <div>
-          <dt>Nationality</dt>
-          <dd>Indonesia</dd>
-        </div>
-        <div>
-          <dt>Instagram</dt>
-          <dd><a href="https://www.instagram.com/glen.rynaldy" target="_blank" rel="noopener noreferrer">instagram.com/glen.rynaldy</a></dd>
-        </div>
-        <div>
-          <dt>LinkedIn</dt>
-          <dd><a href="https://www.linkedin.com/in/glen-rynaldy-hermanus-16841268/" target="_blank" rel="noopener noreferrer">linkedin.com/in/glen-rynaldy-hermanus</a></dd>
-        </div>
-        <div>
-          <dt>Phone</dt>
-          <dd><a href="tel:+6281314169140">081314169140</a></dd>
-        </div>
-        <div>
-          <dt>Email</dt>
-          <dd><a href="mailto:glen.rynaldy@gmail.com">glen.rynaldy@gmail.com</a></dd>
-        </div>
-      </dl>
-    </div>
-  </div>
-</aside>
-
-<!-- <footer class="site-footer">
-  <p>&copy; <span id="year">2026</span> Glen Rynaldy Hermanus. Built with HTML, CSS, and JavaScript.</p>
-  <ul class="socials">
-    <li><a href="https://github.com/glenrh" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-    <li><a href="https://linkedin.com/in/glenrh" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-    <li><a href="https://instagram.com/glenrh" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-  </ul>
-</footer> -->
-
-<script type="module" src="glen-model.js?v=30"></script>
-<script src="main.js?v=stars-2"></script>
+<footer class="colophon">
+  <p>&copy; 2026 Glen Rynaldy Hermanus. Made with Love.</p>
+  <p>Tip: press &larr; and &rarr;, or swipe, to turn the pages.</p>
+</footer>
 </body>
 </html>

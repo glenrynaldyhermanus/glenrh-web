@@ -1,72 +1,78 @@
-# Glen Rynaldy Hermanus — Personal Site
+# The Book of Glen
 
-A static single-page personal site: no framework, no build step.
-Sky and mountain use **smooth gradients**. Scene objects and UI use
-**stylized vector + soft shading** and **dark glass** panels, plus a
-**3D Glen character** (Three.js, `glbs/glenv2.min.glb`) sitting by the
-campfire. The previous cel-shaded snapshot lives in `backup/cel-shaded/`.
+The portfolio of Glen Rynaldy Hermanus at [glenrh.com](https://glenrh.com), told as an interactive picture book.
+Plain HTML, CSS and JavaScript: no framework and no build step.
+
+The previous campsite version is tagged `v1-campsite` in git.
 
 ## Run it
-
-Open `index.html` in a browser, or serve locally:
 
 ```bash
 python3 -m http.server 5173
 ```
 
-Then open http://localhost:5173.
+Then open http://localhost:5173. Opening the files straight from disk won't work, because pages use absolute paths and ES modules.
 
-## Views (single page, hash routing)
+## How the book works
 
-| View | URL | Notes |
-| ---- | --- | ----- |
-| Home | `/` | Hero + campsite scene; Glen 3D sitting on a log by the fire |
-| My Apps | `/#apps` | Zooms to Glen (stands up + waves); apps board slides in ([hris.glenrh.com](https://hris.glenrh.com)) |
-| Contact | `/#contact` | Same zoom; Glen dances (random clip); glass ID card slides in |
+- **Every page is a real HTML file** (`/me/index.html`, `/work/hris/index.html`, …), so plain Nginx serves it and the site works without JavaScript.
+- **Page turns.** `assets/js/app.js` intercepts internal links, fetches the next page, and swaps only `<main id="main">` inside a View Transition. The page curls forward or back depending on `data-folio`. Without View Transitions it fades; with *reduce motion* it swaps instantly.
+- **The narrator.** `assets/js/narrator.js` keeps one 3D Glen (Three.js, `glbs/glenv2.min.glb`) alive across pages. He moves into whichever `[data-narrator-slot]` is visible, changes pose per story beat and speaks in a bubble. If WebGL or the model fails, a poster image stays instead.
+- **Story beats.** `assets/js/story.js` watches `.beat` elements. When one reaches the middle of the screen, Glen plays its `data-pose` and says its `data-say`.
+- **Keyboard and swipe.** ← and → turn pages using `data-prev` and `data-next` on `<main>`. The Contents button opens the table of contents from `assets/js/config.js`.
 
-Nav links **My Apps** / **Contact** trigger the zoom in place; the brand
-mark or the board's **Back** button (and the browser back button) zoom
-out — Glen sits back down via the reversed stand-up animation. While
-zoomed, the camp props (cabin, fire, log, pines) fade out so only Glen
-and the scenery remain.
+Poses: `sit` (on a stack of books), `read` (cross-legged), `wave`, `hey`, `walk`, `run` (page turns) and `dance`.
 
 ## Structure
 
-| File | Contents |
-| ---- | -------- |
-| `index.html` | All markup: sky, campsite scene, hero, apps board + ID card panels |
-| `styles.css` | Night/day palettes, scene, zoom/board transitions, responsive rules |
-| `main.js` | Star generator, parallax, shooting stars, and theme toggle |
-| `glen-model.js` | Three.js: Glen GLB, log prop, lights, zoom camera, animation state machine, hash routing |
-| `glbs/glenv2.glb` | Original Glen character (12 clips); kept as source |
-| `glbs/glenv2.min.glb` | Production model: original mesh + WebP textures, ~2.4 MB |
-| `backup/cel-shaded/` | Snapshot of the cel-shaded look (HTML/CSS/JS) |
+| Path | What it is |
+| --- | --- |
+| `index.html` | Cover and prologue |
+| `me/` | Chapter One |
+| `work/` | Chapter Two: the list plus one folder per story |
+| `playground/` | Chapter Three: the list plus one folder per mini app |
+| `hire-me/` | Epilogue, with the letter form |
+| `404.html` | Missing page |
+| `robots.txt`, `sitemap.xml` | For search engines |
+| `deploy/nginx.conf` | Server config, mounted into the container (not served) |
+| `assets/css/` | `tokens` (colours, type, spacing), `base`, `book` (spreads, narrator, page turns), `components`, `chapters`, `playground` |
+| `assets/js/` | `app` (router), `narrator`, `story`, `config` (contact + contents), `hire`, and `apps/` for the mini apps |
+| `assets/img/` | Chapter plates, work images, `icons.svg` sprite, favicon, OG image |
+| `assets/fonts/` | Bagel Fat One and Literata, self-hosted (OFL), declared in `tokens.css` |
+| `glbs/glenv2.min.glb` | The production 3D Glen. `glenv2.glb`, `glen.glb` and `fbxs/` are source files and are not deployed. |
 
-## Theme toggle
+## Add a story to Chapter Two
 
-Use the moon/sun button in the header to switch between night and day.
-The choice is stored in `localStorage` under `glen-theme` (`night` or `day`).
+1. Copy `work/devant/` to `work/<slug>/` and rewrite the four beats: the setting, the quest, the craft, the ending.
+2. On `<main>`, set `data-folio` (the next odd number), `data-prev` and `data-next`. Update the neighbours' `data-prev`/`data-next` and their pager links.
+3. Add a row to the list in `work/index.html` and an entry under Chapter Two in `assets/js/config.js` (the Contents dialog is built from it).
+4. Put images in `assets/img/work/` as WebP, with `width`, `height` and real `alt` text.
 
-In day mode the moon slides into a sun, sky gradients warm up, stars hide,
-clouds and birds appear, and the campfire goes out (white smoke only).
+Keep client work general: describe the problem and the craft, and use illustrations instead of internal screenshots.
 
-## Customizing the look
+## Add a mini app to Chapter Three
 
-All colors live as custom properties in `:root` inside `styles.css`:
+1. Copy `playground/glen-pet/` and point `data-module` on `<main>` at `/assets/js/apps/<slug>.js`.
+2. The module exports `mount(main, { narrator })` and may return a cleanup function, which runs when the visitor turns the page:
 
-- `--sky-zenith`, `--sky-mid`, `--sky-horizon`, `--glow-horizon` — smooth sky
-  gradient (night: navy → cyan; day overrides under `html[data-theme="day"]`).
-- `--mountain-peak`, `--mountain-mid`, `--mountain-base` — mountain SVG
-  gradient.
-- `--sky-1` … `--sky-6` — aliases still used by UI accents (e.g. highlight).
-- `--gold`, `--aqua`, `--cream` — accent colors for stars, buttons, and labels.
-- `--glass`, `--glass-border`, `--shadow` — frosted panel look (no ink outlines).
+   ```js
+   export function mount(main, { narrator }) {
+     const app = main.querySelector('[data-app="my-app"]');
+     narrator.cue({ pose: "wave", say: "Hello!" });
+     narrator.react("dance");           // short reaction, then back to the beat's pose
+     const t = setInterval(tick, 1000);
+     return () => clearInterval(t);
+   }
+   ```
 
-Star density is controlled by the `LAYERS` array in `main.js` (count, size range,
-and sparkle count per layer).
+3. Mark the app container with `data-no-swipe` so swipes inside it don't turn the page, and include an `.app__nojs` message.
 
-## Notes
+## Writing style
 
-- Animations turn off automatically when the user has *reduce motion* enabled
-  (theme swap becomes instant).
-- Fonts load from Google Fonts; offline, the page still works with system fonts.
+The words are part of the design: short sentences, sentence case, plain English. Pink is only for buttons, focus and active states; blue and green are for illustration and chapter colour.
+
+## Deploy
+
+`../deploy-glenrh.sh web` rsyncs this folder to the server (`/opt/glenrh-web`) and serves it with an `nginx:alpine` container using `deploy/nginx.conf`. That config turns on gzip, serves `404.html` for unknown paths, caches images and the model for a week, and makes pages, CSS and JS revalidate on every visit. The script checks the config with `nginx -t` before it touches the running container.
+
+Because images are cached for a week, give a changed image a new file name instead of overwriting it. When you add a page, add it to `sitemap.xml` too.

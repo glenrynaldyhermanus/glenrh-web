@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 40">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b5a93"/>
+      <stop offset="0.5" stop-color="#2a4478"/>
+      <stop offset="0.52" stop-color="#1f3561"/>
+      <stop offset="1" stop-color="#16274a"/>
+    </linearGradient>
+    <linearGradient id="ferrule" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3d68c"/>
+      <stop offset="0.5" stop-color="#c99a43"/>
+      <stop offset="1" stop-color="#7a5a20"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0d2a6"/>
+      <stop offset="1" stop-color="#c79a62"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="9" width="34" height="22" rx="5" fill="#c96a44"/>
+  <rect x="34" y="8" width="30" height="24" fill="url(#ferrule)"/>
+  <path d="M42 8 V32 M50 8 V32 M58 8 V32" stroke="#6e4f1c" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="64" y="8" width="270" height="24" fill="url(#body)"/>
+  <text x="96" y="25" font-family="Georgia, serif" font-size="12" fill="#e1c27a" letter-spacing="1.5">GLEN &#183; HB</text>
+  <path d="M334 8 L 384 20 L 334 32 Z" fill="url(#wood)"/>
+  <path d="M370 16.5 L 396 20 L 370 23.5 Z" fill="#2b2b2f"/>
+</svg>

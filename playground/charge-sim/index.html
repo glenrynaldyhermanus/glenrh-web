@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charge Sim, charge a car by QR | The Book of Glen</title>
+<meta name="description" content="Pick a charger, scan its QR, pay with pretend QRIS and watch the kilowatt-hours roll in. Time runs a lot faster here.">
+<link rel="canonical" href="https://glenrh.com/playground/charge-sim/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Book of Glen">
+<meta property="og:title" content="Charge Sim, charge a car by QR | The Book of Glen">
+<meta property="og:description" content="Pick a charger, scan its QR, pay with pretend QRIS and watch the kilowatt-hours roll in. Time runs a lot faster here.">
+<meta property="og:url" content="https://glenrh.com/playground/charge-sim/">
+<meta property="og:image" content="https://glenrh.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e1424">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="/assets/css/tokens.css?v=7">
+<link rel="stylesheet" href="/assets/css/base.css?v=7">
+<link rel="stylesheet" href="/assets/css/book.css?v=7">
+<link rel="stylesheet" href="/assets/css/components.css?v=7">
+<link rel="stylesheet" href="/assets/css/chapters.css?v=7">
+<link rel="stylesheet" href="/assets/css/playground.css?v=7">
+<script>document.documentElement.classList.replace("no-js", "js");</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="/assets/js/app.js?v=6"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the story</a>
+<header class="masthead">
+  <nav class="island" aria-label="The Book of Glen">
+    <button type="button" class="island__pill" aria-expanded="false" aria-controls="island-panel">
+      <span class="island__seal" aria-hidden="true">G</span>
+      <span class="island__where"><span class="island__part">The Book of</span><span class="island__title">Glen</span></span>
+      <span class="island__folio" aria-hidden="true"></span>
+      <span class="island__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="visually-hidden">Open the chapters</span>
+    </button>
+    <div class="island__panel" id="island-panel">
+      <div class="island__inner">
+      <ol class="island__chapters">
+        <li><a href="/"><span class="island__no">Front</span><strong>Cover</strong><span class="island__sub">The closed book</span></a></li>
+        <li><a href="/#prologue"><span class="island__no">Intro</span><strong>Prologue</strong><span class="island__sub">Who is Glen?</span><span class="island__pg">p.&nbsp;1</span></a></li>
+        <li><a href="/me/"><span class="island__no">I</span><strong>Me</strong><span class="island__sub">The long version</span><span class="island__pg">p.&nbsp;3</span></a></li>
+        <li><a href="/work/"><span class="island__no">II</span><strong>Work</strong><span class="island__sub">Seven stories</span><span class="island__pg">p.&nbsp;11</span></a></li>
+        <li><a href="/playground/" aria-current="true"><span class="island__no">III</span><strong>Playground</strong><span class="island__sub">Four tiny apps</span><span class="island__pg">p.&nbsp;27</span></a></li>
+        <li><a href="/hire-me/"><span class="island__no">Epilogue</span><strong>Hire Me</strong><span class="island__sub">Your chapter</span><span class="island__pg">p.&nbsp;37</span></a></li>
+      </ol>
+      <div class="island__foot">
+        <button type="button" class="island__toc" data-open-contents aria-haspopup="dialog">
+          <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#book-open"/></svg>Full contents
+        </button>
+      </div>
+      </div>
+    </div>
+    <span class="island__read" aria-hidden="true"></span>
+  </nav>
+</header>
+<main id="main" class="chapter chapter--app" data-page="app" data-app-page="charge-sim" data-ink="blue" data-folio="33" data-prev="/playground/warung-order/" data-next="/playground/glen-pet/" data-pose="walk" data-say="Want to charge a car? No car needed." data-module="/assets/js/apps/charge-sim.js">
+  <div class="spread">
+    <section class="page page--left" aria-labelledby="page-title">
+      <p class="runner caps"><b>Chapter Three</b> <span aria-hidden="true">&middot;</span> Tiny app 3 of 4</p>
+      <h1 id="page-title" class="page-title display">Charge Sim</h1>
+      <p class="lede">Pick a charger, scan its QR, pay with pretend QRIS and watch the kilowatt-hours roll in. Time runs a lot faster here.</p>
+      <div class="narrator-slot" data-narrator-slot></div>
+      <p class="folio">33</p>
+    </section>
+
+    <section class="page page--right" aria-label="Charge Sim, the app">
+      <article class="beat" data-pose="walk" data-say="Want to charge a car? No car needed.">
+        <span class="beat__label caps">How to play</span>
+        <h2>Charge a car by QR.</h2>
+        <div class="prose">
+          <p>Follow the screens: choose a charger, scan, pick an amount and pay. Then plug in, or wait and see what happens when you don&rsquo;t.</p>
+          <p>Charging stops by itself at the amount you paid for, or when the battery is full. Anything left over goes back to the wallet.</p>
+        </div>
+        <div class="app app--sim" data-app="charge-sim" data-no-swipe>
+          <div class="app__bar">
+            <span class="caps">ShtEV, demo mode</span>
+            <span class="tag">Wallet <strong class="tabular" data-wallet>Rp0</strong></span>
+          </div>
+          <div class="app__body">
+            <ol class="steps" aria-label="Steps">
+              <li data-step="pick">Charger</li><li data-step="scan">Scan</li><li data-step="pay">Pay</li><li data-step="plug">Plug in</li><li data-step="charge">Charge</li>
+            </ol>
+            <div class="sim" data-screen aria-live="polite"></div>
+          </div>
+          <p class="app__nojs">This tiny app needs JavaScript to run.</p>
+        </div>
+      </article>
+
+      <article class="beat" data-pose="sit" data-say="Want the grown-up version? It&rsquo;s in Chapter Two.">
+        <span class="beat__label caps">Behind it</span>
+        <div class="ending">
+          <p>This is the exact flow from ShtEV, with the same three safety nets: cut off at the quota, cancel after 90 seconds without a cable, refund the rest. The real one talks to chargers over Tuya Cloud and OCPP.</p>
+          <p><a href="/work/shtev/">Read the ShtEV story <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-right"/></svg></a></p>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Turn the page">
+        <a rel="prev" href="/playground/warung-order/">
+          <span class="caps"><svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-left"/></svg> Previous</span>
+          <strong>Warung Order</strong>
+        </a>
+        <a rel="next" href="/playground/glen-pet/">
+          <span class="caps">Next app <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#arrow-right"/></svg></span>
+          <strong>Glen Pet</strong>
+        </a>
+      </nav>
+      <p class="folio">34</p>
+    </section>
+    <div class="ribbon" aria-hidden="true"></div>
+  </div>
+</main>
+
+<footer class="colophon">
+  <p>&copy; 2026 Glen Rynaldy Hermanus. Made with Love.</p>
+  <p>Tip: press &larr; and &rarr;, or swipe, to turn the pages.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+  <defs>
+    <radialGradient id="pot" cx="0.38" cy="0.32" r="0.75">
+      <stop offset="0" stop-color="#d77a52"/>
+      <stop offset="0.6" stop-color="#b5532f"/>
+      <stop offset="1" stop-color="#6e2e18"/>
+    </radialGradient>
+    <radialGradient id="soil" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0" stop-color="#3a281c"/>
+      <stop offset="1" stop-color="#1c120c"/>
+    </radialGradient>
+    <linearGradient id="leafA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5f9a72"/>
+      <stop offset="1" stop-color="#22503a"/>
+    </linearGradient>
+    <linearGradient id="leafB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f8a63"/>
+      <stop offset="1" stop-color="#18402d"/>
+    </linearGradient>
+    <g id="leaf">
+      <path d="M0 0 C 30 -34, 92 -38, 128 0 C 92 38, 30 34, 0 0 Z"/>
+      <path d="M6 0 L 120 0" fill="none" stroke="#cfe8d6" stroke-opacity="0.45" stroke-width="2.5"/>
+      <path d="M40 0 L 58 -18 M70 0 L 88 -18 M40 0 L 58 18 M70 0 L 88 18" fill="none" stroke="#cfe8d6" stroke-opacity="0.25" stroke-width="1.5"/>
+    </g>
+  </defs>
+  <circle cx="170" cy="170" r="76" fill="url(#pot)"/>
+  <circle cx="170" cy="170" r="76" fill="none" stroke="#f0a27c" stroke-opacity="0.5" stroke-width="3"/>
+  <circle cx="170" cy="170" r="62" fill="url(#soil)"/>
+  <g transform="translate(170 170)">
+    <use href="#leaf" fill="url(#leafB)" transform="rotate(200) translate(10 0) scale(1.05)"/>
+    <use href="#leaf" fill="url(#leafA)" transform="rotate(250) translate(8 0) scale(1.15)"/>
+    <use href="#leaf" fill="url(#leafB)" transform="rotate(305) translate(8 0) scale(1.1)"/>
+    <use href="#leaf" fill="url(#leafA)" transform="rotate(355) translate(10 0) scale(1.2)"/>
+    <use href="#leaf" fill="url(#leafB)" transform="rotate(40) translate(8 0) scale(1.1)"/>
+    <use href="#leaf" fill="url(#leafA)" transform="rotate(95) translate(10 0) scale(1.15)"/>
+    <use href="#leaf" fill="url(#leafB)" transform="rotate(145) translate(8 0) scale(1.05)"/>
+    <use href="#leaf" fill="url(#leafA)" transform="rotate(20) translate(4 0) scale(0.7)"/>
+    <use href="#leaf" fill="url(#leafA)" transform="rotate(170) translate(4 0) scale(0.7)"/>
+    <use href="#leaf" fill="url(#leafB)" transform="rotate(280) translate(4 0) scale(0.65)"/>
+    <circle r="10" fill="#2c5a40"/>
+  </g>
+</svg>
