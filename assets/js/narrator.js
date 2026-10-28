@@ -59,6 +59,8 @@ export function createNarrator({ sound } = {}) {
     said: "",
     typing: 0,
     hideTimer: 0,
+    speakTimer: 0,
+    settleUntil: 0,
     saidAt: 0,
     saidY: 0,
     pointer: { x: 0.5, y: 0.4 },
@@ -163,9 +165,28 @@ export function createNarrator({ sound } = {}) {
     bubble.style.setProperty("--bubble-right", right.toFixed(1) + "px");
   }
 
-  function say(text) {
-    if (!text || text === state.said) return;
-    state.said = text;
+  function hushBubble() {
+    clearInterval(state.typing);
+    clearTimeout(state.hideTimer);
+    clearTimeout(state.speakTimer);
+    state.typing = 0;
+    state.hideTimer = 0;
+    state.speakTimer = 0;
+    bubble.hidden = true;
+    bubbleText.textContent = "";
+  }
+
+  // Hold chat until the page turn / cover open has settled and Glen is on
+  // screen, so the flip sound and the typing voice don't fight.
+  function settle(ms) {
+    state.settleUntil = Math.max(state.settleUntil, performance.now() + (ms == null ? 1000 : ms));
+  }
+
+  function characterReady() {
+    return !!state.glen || !canvas.isConnected;
+  }
+
+  function speak(text) {
     clearInterval(state.typing);
     clearTimeout(state.hideTimer);
     bubble.hidden = false;
@@ -197,6 +218,36 @@ export function createNarrator({ sound } = {}) {
     }
   }
 
+  function say(text, opts) {
+    opts = opts || {};
+    if (!text || text === state.said) return;
+    hushBubble();
+    state.said = text;
+    live.textContent = "Glen says: " + text;
+
+    if (opts.immediate || reduceMotion) {
+      speak(text);
+      return;
+    }
+
+    const started = performance.now();
+    const waitFor = function () {
+      const left = state.settleUntil - performance.now();
+      if (left > 0) {
+        state.speakTimer = setTimeout(waitFor, left);
+        return;
+      }
+      // Give the 3D model a moment to replace the poster; fall back to the
+      // poster if it never arrives so chat isn't stuck forever.
+      if (!characterReady() && performance.now() - started < 4000) {
+        state.speakTimer = setTimeout(waitFor, 120);
+        return;
+      }
+      if (state.said === text) speak(text);
+    };
+    waitFor();
+  }
+
   /* ---------------- Poses ---------------- */
 
   function applyPose(name) {
@@ -204,20 +255,25 @@ export function createNarrator({ sound } = {}) {
     if (state.glen) state.glen.setPose(name);
   }
 
-  function cue(beat) {
+  function cue(beat, opts) {
     if (!beat) return;
     if (beat.pose && POSES[beat.pose]) state.desired = beat.pose;
-    if (beat.say) say(beat.say);
+    if (beat.say) say(beat.say, opts);
   }
 
   function setPage(main) {
     state.slots = Array.from(main.querySelectorAll("[data-narrator-slot]"));
     state.said = "";
+    hushBubble();
+    // First paint of a page, or after a turn: let Glen land before he talks.
+    settle(state.settleUntil > performance.now() ? 0 : 700);
     if (main.dataset.say) live.textContent = "Glen says: " + main.dataset.say;
     cue({ pose: main.dataset.pose, say: main.dataset.say });
   }
 
   function turn() {
+    hushBubble();
+    settle(1000);
     if (reduceMotion) return;
     state.lockUntil = performance.now() + 900;
     applyPose("run");
@@ -231,7 +287,7 @@ export function createNarrator({ sound } = {}) {
 
   hit.addEventListener("click", function () {
     state.said = "";
-    say(POKE_LINES[Math.floor(Math.random() * POKE_LINES.length)]);
+    say(POKE_LINES[Math.floor(Math.random() * POKE_LINES.length)], { immediate: true });
     react();
   });
 
@@ -269,7 +325,7 @@ export function createNarrator({ sound } = {}) {
   }
   if (document.readyState === "complete") setTimeout(boot, 0);
 
-  return { setPage, cue, say, turn, react, element: el };
+  return { setPage, cue, say, turn, react, settle, element: el };
 }
 
 /* ==================================================================

@@ -274,9 +274,16 @@ function mountTome(main, tome, narrator) {
       });
     }
 
+    // Wave as soon as the cover is past halfway, but hold the chat until the
+    // open book has landed and Glen is on screen.
     if (openT > 0.6 && !saidHello) {
       saidHello = true;
-      narrator.cue({ pose: "wave", say: "Come in! This is where my story starts." });
+      narrator.cue({ pose: "wave" });
+    }
+    if (landed && saidHello && !tome.dataset.saidHello) {
+      tome.dataset.saidHello = "1";
+      narrator.settle(1000);
+      narrator.say("Come in! This is where my story starts.");
     }
   };
 
