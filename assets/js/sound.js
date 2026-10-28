@@ -1,92 +1,64 @@
 /**
- * The book's sound: Tamengetit's theme as background music, plus a paper
- * flip and a soft typing tick drawn with Web Audio. Browsers only allow sound
- * after the reader's first click, tap or key, so nothing plays before that.
+ * The book's sound: Tamengetit's theme as background music, real page flips
+ * (Kenney's RPG Audio, CC0) and a little game-style voice for the narrator.
+ * Browsers only allow sound after the reader's first click, tap or key, so
+ * nothing plays before that.
  */
 
 const KEY = "glen:sound";
 const THEME_URL = "/assets/audio/theme.mp3";
 const MUSIC_LEVEL = 0.2;
+const FLIP_LEVEL = 1;
+const SAMPLES = {
+  flips: ["/assets/audio/flip-1.mp3", "/assets/audio/flip-2.mp3", "/assets/audio/flip-3.mp3"],
+  cover: "/assets/audio/cover.mp3"
+};
 
 /* ---------------- Effects (pure, so they can be rendered offline too) ---------------- */
 
-export function makeNoise(c) {
-  const buf = c.createBuffer(1, c.sampleRate, c.sampleRate);
-  const d = buf.getChannelData(0);
-  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-  return buf;
-}
-
-function burst(c, noise, out, t, len) {
+// Forward pages travel right to left, so the sound does too.
+export function drawFlip(c, buffer, out, t, dir, level) {
   const src = c.createBufferSource();
-  src.buffer = noise;
-  src.loop = true;
-  src.start(t, Math.random() * 0.8);
-  src.stop(t + len + 0.05);
-  return src;
-}
-
-// A sheet sliding across the one beneath it, then landing. Forward pages
-// travel right to left, so the sound does too.
-export function drawFlip(c, noise, out, t, dir) {
-  const heavy = dir === "cover";
-  const len = heavy ? 0.78 : 0.52;
-  const lo = heavy ? 380 : 750;
-  const hi = heavy ? 1900 : 3400;
-
-  const band = c.createBiquadFilter();
-  band.type = "bandpass";
-  band.Q.value = 0.9;
-  band.frequency.setValueAtTime(lo, t);
-  band.frequency.exponentialRampToValueAtTime(hi, t + len * 0.45);
-  band.frequency.exponentialRampToValueAtTime(lo * 1.4, t + len);
-
-  // Rises fast, falls slowly, and crinkles on the way.
+  src.buffer = buffer;
+  src.playbackRate.value = 0.94 + Math.random() * 0.12;
   const gain = c.createGain();
-  const steps = 64;
-  const curve = new Float32Array(steps);
-  for (let i = 0; i < steps; i++) {
-    const x = i / (steps - 1);
-    const env = Math.pow(Math.sin(Math.PI * Math.pow(x, 0.6)), 1.6);
-    curve[i] = env * (0.5 + Math.random() * 0.5) * (heavy ? 0.85 : 0.7);
-  }
-  gain.gain.setValueCurveAtTime(curve, t, len);
-
-  let tail = gain;
-  if (c.createStereoPanner) {
+  gain.gain.value = level;
+  src.connect(gain);
+  if (c.createStereoPanner && dir !== "cover") {
     const pan = c.createStereoPanner();
-    const from = dir === "back" ? -0.45 : 0.45;
+    const from = dir === "back" ? -0.35 : 0.35;
     pan.pan.setValueAtTime(from, t);
-    pan.pan.linearRampToValueAtTime(-from, t + len);
-    gain.connect(pan);
-    tail = pan;
+    pan.pan.linearRampToValueAtTime(-from, t + buffer.duration);
+    gain.connect(pan).connect(out);
+  } else {
+    gain.connect(out);
   }
-  tail.connect(out);
-  burst(c, noise, out, t, len).connect(band).connect(gain);
-
-  const land = t + len * 0.8;
-  const low = c.createBiquadFilter();
-  low.type = "lowpass";
-  low.frequency.value = heavy ? 240 : 480;
-  const thud = c.createGain();
-  thud.gain.setValueAtTime(0, land);
-  thud.gain.linearRampToValueAtTime(heavy ? 0.6 : 0.25, land + 0.006);
-  thud.gain.exponentialRampToValueAtTime(0.001, land + (heavy ? 0.14 : 0.09));
-  burst(c, noise, out, land, 0.15).connect(low).connect(thud).connect(out);
+  src.start(t);
 }
 
-// One key on a soft keyboard. Punctuation lands a little heavier.
-export function drawTick(c, noise, out, t, ch) {
-  const heavy = /[.,!?:;]/.test(ch);
-  const band = c.createBiquadFilter();
-  band.type = "bandpass";
-  band.Q.value = 2.2;
-  band.frequency.value = (heavy ? 1500 : 2400) + Math.random() * 1400;
+// Glen's voice, the way old farming games talk: one square-wave blip per
+// syllable-ish, its pitch picked by the letter so words keep their own tune.
+const SCALE = [0, 2, 4, 7, 9, 12];
+const ROOT = 587.33;
+
+export function drawBlip(c, out, t, ch) {
+  const step = SCALE[ch.toLowerCase().charCodeAt(0) % SCALE.length];
+  const f = ROOT * Math.pow(2, step / 12);
+  const osc = c.createOscillator();
+  osc.type = "square";
+  osc.frequency.setValueAtTime(f, t);
+  osc.frequency.exponentialRampToValueAtTime(f * 0.94, t + 0.045);
+  const soft = c.createBiquadFilter();
+  soft.type = "lowpass";
+  soft.frequency.value = 3200;
   const gain = c.createGain();
   gain.gain.setValueAtTime(0, t);
-  gain.gain.linearRampToValueAtTime(heavy ? 0.34 : 0.22, t + 0.002);
-  gain.gain.exponentialRampToValueAtTime(0.001, t + (heavy ? 0.05 : 0.032));
-  burst(c, noise, out, t, 0.06).connect(band).connect(gain).connect(out);
+  gain.gain.linearRampToValueAtTime(0.045, t + 0.004);
+  gain.gain.setValueAtTime(0.045, t + 0.026);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+  osc.connect(soft).connect(gain).connect(out);
+  osc.start(t);
+  osc.stop(t + 0.06);
 }
 
 /* ---------------- The player ---------------- */
@@ -95,7 +67,6 @@ export function createSound() {
   let on = true;
   try { on = localStorage.getItem(KEY) !== "off"; } catch (_) {}
   let ctx = null;
-  let noise = null;
   let fx = null;
   let audio = null;
   let musicGain = null;
@@ -103,16 +74,31 @@ export function createSound() {
   let hushed = 0;
   let pauseTimer = 0;
   let lastTick = 0;
+  let lastFlip = -1;
+  let samples = null;
   const buttons = new Set();
+
+  // The flips are tiny, so fetch them up front and decode once there's a context,
+  // in time for the first page turn.
+  const bytes = function (url) {
+    return fetch(url).then(function (r) { return r.arrayBuffer(); });
+  };
+  const raw = Promise.all([Promise.all(SAMPLES.flips.map(bytes)), bytes(SAMPLES.cover)]);
+  raw.catch(function () {});
 
   function context() {
     if (ctx) return ctx;
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return null;
     ctx = new AC();
-    noise = makeNoise(ctx);
     fx = ctx.createGain();
     fx.connect(ctx.destination);
+    const decode = function (b) { return ctx.decodeAudioData(b); };
+    raw.then(function (r) {
+      return Promise.all([Promise.all(r[0].map(decode)), decode(r[1])]);
+    }).then(function (d) {
+      samples = { flips: d[0], cover: d[1] };
+    }, function () {});
     return ctx;
   }
 
@@ -203,14 +189,23 @@ export function createSound() {
   return {
     mountToggle,
     flip(dir) {
-      if (ready()) drawFlip(ctx, noise, fx, ctx.currentTime + 0.01, dir);
+      if (!ready() || !samples) return;
+      let buffer = samples.cover;
+      if (dir !== "cover") {
+        let i = Math.floor(Math.random() * samples.flips.length);
+        if (i === lastFlip) i = (i + 1) % samples.flips.length;
+        lastFlip = i;
+        buffer = samples.flips[i];
+      }
+      drawFlip(ctx, buffer, fx, ctx.currentTime + 0.01, dir, FLIP_LEVEL);
     },
+    // Spaces and punctuation stay quiet, which gives the voice its pauses.
     type(ch) {
-      if (!ready() || !ch || ch === " ") return;
+      if (!ready() || !ch || !/[\p{L}\p{N}]/u.test(ch)) return;
       const now = ctx.currentTime;
-      if (now - lastTick < 0.045) return;
+      if (now - lastTick < 0.055) return;
       lastTick = now;
-      drawTick(ctx, noise, fx, now + 0.005, ch);
+      drawBlip(ctx, fx, now + 0.005, ch);
     },
     // Pages with their own audio (the games) hold the music while they play.
     hush() {
