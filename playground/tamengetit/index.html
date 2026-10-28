@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tamengetit, a pocket pet game | The Book of Glen</title>
+<meta name="description" content="Play Tamengetit, a Tamagotchi-style pocket pet built by Glen with Flutter and Flame. Hatch the egg, feed it, keep it clean.">
+<link rel="canonical" href="https://glenrh.com/playground/tamengetit/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Book of Glen">
+<meta property="og:title" content="Tamengetit, a pocket pet game | The Book of Glen">
+<meta property="og:description" content="Play Tamengetit, a Tamagotchi-style pocket pet built by Glen with Flutter and Flame. Hatch the egg, feed it, keep it clean.">
+<meta property="og:url" content="https://glenrh.com/playground/tamengetit/">
+<meta property="og:image" content="https://glenrh.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e1424">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="/assets/css/tokens.css?v=7">
+<link rel="stylesheet" href="/assets/css/base.css?v=7">
+<link rel="stylesheet" href="/assets/css/book.css?v=7">
+<link rel="stylesheet" href="/assets/css/components.css?v=7">
+<link rel="stylesheet" href="/assets/css/chapters.css?v=7">
+<link rel="stylesheet" href="/assets/css/playground.css?v=7">
+<script>document.documentElement.classList.replace("no-js", "js");</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="/assets/js/app.js?v=6"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the story</a>
+<header class="masthead">
+  <nav class="island" aria-label="The Book of Glen">
+    <button type="button" class="island__pill" aria-expanded="false" aria-controls="island-panel">
+      <span class="island__seal" aria-hidden="true">G</span>
+      <span class="island__where"><span class="island__part">The Book of</span><span class="island__title">Glen</span></span>
+      <span class="island__folio" aria-hidden="true"></span>
+      <span class="island__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="visually-hidden">Open the chapters</span>
+    </button>
+    <div class="island__panel" id="island-panel">
+      <div class="island__inner">
+      <ol class="island__chapters">
+        <li><a href="/"><span class="island__no">Front</span><strong>Cover</strong><span class="island__sub">The closed book</span></a></li>
+        <li><a href="/#prologue"><span class="island__no">Intro</span><strong>Prologue</strong><span class="island__sub">Who is Glen?</span><span class="island__pg">p.&nbsp;1</span></a></li>
+        <li><a href="/me/"><span class="island__no">I</span><strong>Me</strong><span class="island__sub">The long version</span><span class="island__pg">p.&nbsp;3</span></a></li>
+        <li><a href="/work/"><span class="island__no">II</span><strong>Work</strong><span class="island__sub">Nine businesses</span><span class="island__pg">p.&nbsp;11</span></a></li>
+        <li><a href="/playground/" aria-current="true"><span class="island__no">III</span><strong>Playground</strong><span class="island__sub">Tiny apps and games</span><span class="island__pg">p.&nbsp;33</span></a></li>
+        <li><a href="/hire-me/"><span class="island__no">Epilogue</span><strong>Hire Me</strong><span class="island__sub">Your chapter</span><span class="island__pg">p.&nbsp;47</span></a></li>
+      </ol>
+      <div class="island__foot">
+        <button type="button" class="island__toc" data-open-contents aria-haspopup="dialog">
+          <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg?v=2#book-open"/></svg>Full contents
+        </button>
+      </div>
+      </div>
+    </div>
+    <span class="island__read" aria-hidden="true"></span>
+  </nav>
+</header>
+<main id="main" class="chapter chapter--app" data-page="app" data-app-page="tamengetit" data-ink="blue" data-folio="43" data-prev="/playground/glen-pet/" data-next="/playground/lobbyland/" data-pose="hey" data-say="An egg! Tap Play and see what hatches." data-module="/assets/js/apps/flutter-game.js">
+  <div class="spread">
+    <section class="page page--left" aria-labelledby="page-title">
+      <p class="runner caps"><b>Chapter Three</b> <span aria-hidden="true">&middot;</span> Game 1 of 2</p>
+      <h1 id="page-title" class="page-title display">Tamengetit</h1>
+      <p class="lede">A pocket pet in the spirit of the Tamagotchi. Hatch the egg, feed it, keep it clean and keep it alive.</p>
+      <div class="narrator-slot" data-narrator-slot></div>
+      <p class="folio">43</p>
+    </section>
+
+    <section class="page page--right" aria-label="Tamengetit, the game">
+      <article class="beat" data-pose="hey" data-say="An egg! Tap Play and see what hatches.">
+        <span class="beat__label caps">How to play</span>
+        <h2>Play Tamengetit.</h2>
+        <div class="prose">
+          <p>Press <strong>Play</strong>, then click inside the game. Feed your pet at meal times, give it something spicy for fun, clean up after it and bring medicine when it&rsquo;s sick.</p>
+          <p>The game is in Indonesian, just like the original. Your pet is saved in this browser, so it&rsquo;ll be waiting next time.</p>
+        </div>
+        <div class="app" data-app="game" data-name="Tamengetit" data-src="/games/tamengetit/" data-no-swipe>
+          <div class="app__bar">
+            <span class="caps">Tamengetit</span>
+            <a class="btn btn--ghost btn--sm" href="/games/tamengetit/" target="_blank" rel="noopener">Full screen <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg?v=2#external"/></svg></a>
+          </div>
+          <div class="app__body">
+            <div class="game__stage" data-stage>
+              <img class="game__poster" src="/assets/img/play/tamengetit-poster.webp" width="632" height="1124" alt="Tamengetit: a green spotted egg on a farm by a river, under a sunset, waiting to hatch.">
+              <button type="button" class="btn btn--primary" data-play><svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg?v=2#gamepad"/></svg> Play Tamengetit</button>
+            </div>
+            <p class="form-status" role="status" data-status>About 15&nbsp;MB. It loads when you press Play.</p>
+          </div>
+          <p class="app__nojs">This page needs JavaScript to load the game. You can also <a href="/games/tamengetit/">open Tamengetit on its own</a>.</p>
+        </div>
+      </article>
+
+      <article class="beat" data-pose="sit" data-say="Built with Flutter and Flame.">
+        <span class="beat__label caps">Behind it</span>
+        <div class="ending">
+          <p>Tamengetit is a real Flutter app built with the Flame game engine, compiled for the web. The same code runs on Android and iOS.</p>
+          <p>The pet is drawn from SVG parts and recoloured, so every egg hatches a slightly different monster. <a href="/work/short-stories/#tamengetit">Read the short story <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg?v=2#arrow-right"/></svg></a></p>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Turn the page">
+        <a rel="prev" href="/playground/glen-pet/">
+          <span class="caps"><svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg?v=2#arrow-left"/></svg> Previous</span>
+          <strong>Glen Pet</strong>
+        </a>
+        <a rel="next" href="/playground/lobbyland/">
+          <span class="caps">Next game <svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg?v=2#arrow-right"/></svg></span>
+          <strong>Lobby Land</strong>
+        </a>
+      </nav>
+      <p class="folio">44</p>
+    </section>
+    <div class="ribbon" aria-hidden="true"></div>
+  </div>
+</main>
+
+<footer class="colophon">
+  <p>&copy; 2026 Glen Rynaldy Hermanus. Made with Love.</p>
+  <p>Tip: press &larr; and &rarr;, or swipe, to turn the pages.</p>
+</footer>
+</body>
+</html>

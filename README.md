@@ -32,6 +32,7 @@ Poses: `sit` (on a stack of books), `read` (cross-legged), `wave`, `hey`, `walk`
 | `work/` | Chapter Two: the list plus one folder per story |
 | `playground/` | Chapter Three: the list plus one folder per mini app |
 | `hire-me/` | Epilogue, with the letter form |
+| `games/` | Flutter web builds of Tamengetit and Lobby Land, embedded by their Playground pages |
 | `404.html` | Missing page |
 | `robots.txt`, `sitemap.xml` | For search engines |
 | `deploy/nginx.conf` | Server config, mounted into the container (not served) |
@@ -43,12 +44,12 @@ Poses: `sit` (on a stack of books), `read` (cross-legged), `wave`, `hey`, `walk`
 
 ## Add a story to Chapter Two
 
-1. Copy `work/devant/` to `work/<slug>/` and rewrite the four beats: the setting, the quest, the craft, the ending.
+1. Copy `work/shtev/` to `work/<slug>/` and rewrite the four beats: the setting, the quest, the craft, the ending.
 2. On `<main>`, set `data-folio` (the next odd number), `data-prev` and `data-next`. Update the neighbours' `data-prev`/`data-next` and their pager links.
 3. Add a row to the list in `work/index.html` and an entry under Chapter Two in `assets/js/config.js` (the Contents dialog is built from it).
 4. Put images in `assets/img/work/` as WebP, with `width`, `height` and real `alt` text.
 
-Keep client work general: describe the problem and the craft, and use illustrations instead of internal screenshots.
+Lead with the business, not the stack: the list in `work/index.html` shows what each product does for whom. Use real product screens (never a login or splash screen) and keep private data out of them. Capture websites at full desktop width, for example 1440 by 900 at 2x.
 
 ## Add a mini app to Chapter Three
 

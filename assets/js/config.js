@@ -13,22 +13,27 @@ export const CONTENTS = [
   { label: "Chapter One: Me", href: "/me/", folio: 3 },
   {
     label: "Chapter Two: Work", href: "/work/", folio: 11, children: [
-      { label: "HRIS", href: "/work/hris/", folio: 13 },
-      { label: "MAVIS", href: "/work/mavis/", folio: 15 },
-      { label: "ShtEV", href: "/work/shtev/", folio: 17 },
-      { label: "Climaxx", href: "/work/climaxx/", folio: 19 },
-      { label: "Devant", href: "/work/devant/", folio: 21 },
-      { label: "Cineflow", href: "/work/cineflow/", folio: 23 },
-      { label: "Short stories", href: "/work/short-stories/", folio: 25 }
+      { label: "m.tix", href: "/work/mtix/", folio: 13 },
+      { label: "Metropole Padel", href: "/work/padel/", folio: 15 },
+      { label: "HRIS", href: "/work/hris/", folio: 17 },
+      { label: "Allnimall", href: "/work/allnimall/", folio: 19 },
+      { label: "ShtEV", href: "/work/shtev/", folio: 21 },
+      { label: "Climaxx", href: "/work/climaxx/", folio: 23 },
+      { label: "MAVIS", href: "/work/mavis/", folio: 25 },
+      { label: "Transmore", href: "/work/transmore/", folio: 27 },
+      { label: "Ourbit", href: "/work/ourbit/", folio: 29 },
+      { label: "Short stories", href: "/work/short-stories/", folio: 31 }
     ]
   },
   {
-    label: "Chapter Three: Playground", href: "/playground/", folio: 27, children: [
-      { label: "CV Match", href: "/playground/cv-match/", folio: 29 },
-      { label: "Warung Order", href: "/playground/warung-order/", folio: 31 },
-      { label: "Charge Sim", href: "/playground/charge-sim/", folio: 33 },
-      { label: "Glen Pet", href: "/playground/glen-pet/", folio: 35 }
+    label: "Chapter Three: Playground", href: "/playground/", folio: 33, children: [
+      { label: "CV Match", href: "/playground/cv-match/", folio: 35 },
+      { label: "Warung Order", href: "/playground/warung-order/", folio: 37 },
+      { label: "Charge Sim", href: "/playground/charge-sim/", folio: 39 },
+      { label: "Glen Pet", href: "/playground/glen-pet/", folio: 41 },
+      { label: "Tamengetit", href: "/playground/tamengetit/", folio: 43 },
+      { label: "Lobby Land", href: "/playground/lobbyland/", folio: 45 }
     ]
   },
-  { label: "Epilogue: Hire Me", href: "/hire-me/", folio: 37 }
+  { label: "Epilogue: Hire Me", href: "/hire-me/", folio: 47 }
 ];

@@ -20,7 +20,7 @@ const AMOUNTS = [25000, 50000, 100000];
 const rupiah = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 });
 const kwhFmt = new Intl.NumberFormat("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-const ICON = function (name) { return '<svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg#' + name + '"/></svg>'; };
+const ICON = function (name) { return '<svg class="icon" aria-hidden="true"><use href="/assets/img/icons.svg?v=2#' + name + '"/></svg>'; };
 
 /** A decorative QR-looking grid. It encodes nothing. */
 function fakeQr(seed) {
