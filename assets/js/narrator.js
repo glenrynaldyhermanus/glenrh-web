@@ -48,6 +48,8 @@ export function createNarrator({ sound } = {}) {
 
   const state = {
     slots: [],
+    slot: null,
+    gliding: false,
     rect: null,
     shown: false,
     pose: "sit",
@@ -98,14 +100,24 @@ export function createNarrator({ sound } = {}) {
       const target = { x: picked.r.left, y: picked.r.top, w: picked.r.width, h: picked.r.height };
       const mode = modeFor(picked.slot);
       if (el.dataset.mode !== mode) el.dataset.mode = mode;
-      if (!state.rect || reduceMotion) {
+      // Glide only when moving to another slot; otherwise stay glued to the
+      // page, or Glen trails behind every scroll and seems to float.
+      if (picked.slot !== state.slot) {
+        state.gliding = !!state.rect;
+        state.slot = picked.slot;
+      }
+      if (!state.rect || reduceMotion || !state.gliding) {
         state.rect = { ...target };
       } else {
         const k = 1 - Math.exp(-9 * dt);
-        state.rect.x += (target.x - state.rect.x) * k;
-        state.rect.y += (target.y - state.rect.y) * k;
-        state.rect.w += (target.w - state.rect.w) * k;
-        state.rect.h += (target.h - state.rect.h) * k;
+        const r = state.rect;
+        r.x += (target.x - r.x) * k;
+        r.y += (target.y - r.y) * k;
+        r.w += (target.w - r.w) * k;
+        r.h += (target.h - r.h) * k;
+        if (Math.abs(target.x - r.x) + Math.abs(target.y - r.y) + Math.abs(target.w - r.w) + Math.abs(target.h - r.h) < 2) {
+          state.gliding = false;
+        }
       }
       const r = state.rect;
       el.style.transform = "translate3d(" + r.x.toFixed(1) + "px," + r.y.toFixed(1) + "px,0)";
@@ -170,7 +182,7 @@ export function createNarrator({ sound } = {}) {
       state.typing = setInterval(function () {
         i += 1;
         node.textContent = text.slice(0, i);
-        if (sound) sound.type(text[i - 1]);
+        if (sound) sound.type(text[i - 1], text[i - 2]);
         if (i >= text.length) {
           clearInterval(state.typing);
           caret.remove();
@@ -369,25 +381,41 @@ async function loadGlen(canvas) {
   model.position.z -= center.z;
   model.position.y -= standBox.min.y;
 
-  // Some clips sink below the floor (sitting cross-legged); measure how far to lift each one.
-  const lift = {};
+  // Every clip's lowest point drifts above or below the floor as it plays
+  // (the breakdance floats, the waves sink), so sample it along each clip
+  // and keep Glen on the ground frame by frame.
+  const GROUND_STEPS = 16;
+  const ground = {};
   const baseY = model.position.y;
-  Object.keys(POSES).forEach(function (pose) {
-    POSES[pose].clips.forEach(function (name) {
+  Object.keys(POSES).flatMap(function (p) { return POSES[p].clips; })
+    .concat("Sit_to_standTransition_Female_2")
+    .forEach(function (name) {
       const clip = clips[name];
-      if (!clip || lift[name] != null) return;
-      poseAt(name, clip.duration * 0.5);
-      const minY = skinnedBounds().min.y;
-      lift[name] = minY < 0 ? -minY : 0;
+      if (!clip || ground[name]) return;
+      const g = new Float32Array(GROUND_STEPS);
+      for (let i = 0; i < GROUND_STEPS; i++) {
+        poseAt(name, (clip.duration * i) / (GROUND_STEPS - 1));
+        g[i] = -skinnedBounds().min.y;
+      }
+      ground[name] = g;
     });
-  });
 
-  // Seat height for Sit_and_Drink, measured at the hips.
+  function liftAt(action) {
+    if (!action) return 0;
+    const clip = action.getClip();
+    const g = ground[clip.name];
+    if (!g) return 0;
+    const x = clamp(action.time / clip.duration, 0, 1) * (GROUND_STEPS - 1);
+    const i = Math.min(GROUND_STEPS - 2, Math.floor(x));
+    return g[i] + (g[i + 1] - g[i]) * (x - i);
+  }
+
+  // Seat height for Sit_and_Drink, measured at the hips once the feet are down.
   poseAt("Sit_and_Drink", 0.5);
-  model.updateMatrixWorld(true);
+  const seatLift = -skinnedBounds().min.y;
   const hipPos = new THREE.Vector3();
   if (hips) hips.getWorldPosition(hipPos);
-  const seatTop = Math.max(standH * 0.18, hipPos.y - standH * 0.06);
+  const seatTop = Math.max(standH * 0.18, hipPos.y + seatLift - standH * 0.06);
   const seatZ = hips ? hipPos.z - standH * 0.04 : 0;
   mixer.stopAllAction();
 
@@ -449,23 +477,29 @@ async function loadGlen(canvas) {
   books.scale.setScalar(0.0001);
   pivot.add(books);
 
-  /* Ground shadow. */
-  const shadowCanvas = document.createElement("canvas");
-  shadowCanvas.width = shadowCanvas.height = 64;
-  const ctx = shadowCanvas.getContext("2d");
-  const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-  grad.addColorStop(0, "rgba(4,6,12,0.45)");
-  grad.addColorStop(1, "rgba(29,26,47,0)");
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, 64, 64);
-  const shadow = new THREE.Mesh(
-    new THREE.PlaneGeometry(standH * 0.7, standH * 0.7),
-    new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(shadowCanvas), transparent: true, depthWrite: false })
-  );
-  shadow.rotation.x = -Math.PI / 2;
-  shadow.scale.y = 0.55;
-  shadow.position.y = 0.002;
-  pivot.add(shadow);
+  /* Ground shadow: a soft pool, plus a dark contact patch right under the
+     shoes so Glen stands on the page instead of hovering over it. */
+  function groundShadow(size, alpha, y) {
+    const c = document.createElement("canvas");
+    c.width = c.height = 64;
+    const g2 = c.getContext("2d");
+    const grad = g2.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grad.addColorStop(0, "rgba(4,6,12," + alpha + ")");
+    grad.addColorStop(0.5, "rgba(4,6,12," + alpha * 0.55 + ")");
+    grad.addColorStop(1, "rgba(29,26,47,0)");
+    g2.fillStyle = grad;
+    g2.fillRect(0, 0, 64, 64);
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(standH * size, standH * size),
+      new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false })
+    );
+    mesh.rotation.x = -Math.PI / 2;
+    mesh.scale.y = 0.55;
+    mesh.position.y = y;
+    pivot.add(mesh);
+  }
+  groundShadow(0.7, 0.4, 0.002);
+  groundShadow(0.3, 0.75, 0.003);
 
   /* ---------------- Pose state machine ---------------- */
 
@@ -474,7 +508,7 @@ async function loadGlen(canvas) {
   let lookWeight = 1;
   let lookTarget = 1;
   let booksTarget = 0;
-  let liftTarget = 0;
+  let previous = null;
   let replayAt = 0;
   let onFinished = null;
   const standUp = clips["Sit_to_standTransition_Female_2"];
@@ -501,9 +535,9 @@ async function loadGlen(canvas) {
       const fade = opts.fade != null ? opts.fade : 0.4;
       current.fadeOut(fade);
       action.fadeIn(fade);
+      previous = current;
     }
     current = action;
-    liftTarget = lift[clip.name] || 0;
     onFinished = opts.onFinished || null;
     return action;
   }
@@ -555,6 +589,12 @@ async function loadGlen(canvas) {
 
   const look = new THREE.Vector2();
   const qHead = new THREE.Quaternion();
+  // The mixer skips bones whose value didn't change (a clamped, finished
+  // clip), so the look and sway would pile up frame after frame and spin the
+  // head. Put back the animated pose first, then add them on top.
+  const headPose = new THREE.Quaternion();
+  const spinePose = new THREE.Quaternion();
+  let posed = false;
   const euler = new THREE.Euler();
   const headWorld = new THREE.Vector3();
   const hipsWorld = new THREE.Vector3();
@@ -590,7 +630,14 @@ async function loadGlen(canvas) {
     elapsed += dt;
 
     if (!reduceMotion) {
+      if (posed) {
+        if (head) head.quaternion.copy(headPose);
+        if (spine) spine.quaternion.copy(spinePose);
+      }
       mixer.update(dt);
+      if (head) headPose.copy(head.quaternion);
+      if (spine) spinePose.copy(spine.quaternion);
+      posed = true;
       if (replayAt && performance.now() > replayAt && currentPose && !POSES[currentPose].loop) {
         const clip = clipFor(currentPose);
         if (clip) play(clip, { once: true, fade: 0.2 });
@@ -602,7 +649,13 @@ async function loadGlen(canvas) {
     const bs = books.scale.x + (Math.max(booksTarget, 0.0001) - books.scale.x) * Math.min(1, dt * 6);
     books.scale.setScalar(bs);
     books.visible = bs > 0.02;
-    model.position.y += (baseY + liftTarget - model.position.y) * Math.min(1, dt * 5);
+    // While two clips cross-fade, blend their floors by weight too.
+    let lift = liftAt(current);
+    if (previous && previous !== current && previous.enabled && previous.getEffectiveWeight() > 0) {
+      const w = clamp(current.getEffectiveWeight(), 0, 1);
+      lift = lift * w + liftAt(previous) * (1 - w);
+    }
+    model.position.y += (baseY + lift - model.position.y) * Math.min(1, dt * 14);
 
     if (head && !reduceMotion && lookWeight > 0.01) {
       const cx = (rect.x + rect.w * 0.5) / window.innerWidth;

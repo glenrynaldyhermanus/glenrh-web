@@ -36,29 +36,25 @@ export function drawFlip(c, buffer, out, t, dir, level) {
   src.start(t);
 }
 
-// Glen's voice, the way old farming games talk: one square-wave blip per
-// syllable-ish, its pitch picked by the letter so words keep their own tune.
-const SCALE = [0, 2, 4, 7, 9, 12];
-const ROOT = 587.33;
+// Glen's voice, the way old farming games talk: one soft "bup" per word,
+// pitched by its first letter within a narrow range so it hums rather than jumps.
+const SCALE = [0, 2, 4];
+const ROOT = 523.25;
 
 export function drawBlip(c, out, t, ch) {
   const step = SCALE[ch.toLowerCase().charCodeAt(0) % SCALE.length];
   const f = ROOT * Math.pow(2, step / 12);
   const osc = c.createOscillator();
-  osc.type = "square";
-  osc.frequency.setValueAtTime(f, t);
-  osc.frequency.exponentialRampToValueAtTime(f * 0.94, t + 0.045);
-  const soft = c.createBiquadFilter();
-  soft.type = "lowpass";
-  soft.frequency.value = 3200;
+  osc.type = "triangle";
+  osc.frequency.setValueAtTime(f * 0.9, t);
+  osc.frequency.exponentialRampToValueAtTime(f, t + 0.02);
   const gain = c.createGain();
   gain.gain.setValueAtTime(0, t);
-  gain.gain.linearRampToValueAtTime(0.045, t + 0.004);
-  gain.gain.setValueAtTime(0.045, t + 0.026);
-  gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
-  osc.connect(soft).connect(gain).connect(out);
+  gain.gain.linearRampToValueAtTime(0.11, t + 0.005);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
+  osc.connect(gain).connect(out);
   osc.start(t);
-  osc.stop(t + 0.06);
+  osc.stop(t + 0.09);
 }
 
 /* ---------------- The player ---------------- */
@@ -199,11 +195,12 @@ export function createSound() {
       }
       drawFlip(ctx, buffer, fx, ctx.currentTime + 0.01, dir, FLIP_LEVEL);
     },
-    // Spaces and punctuation stay quiet, which gives the voice its pauses.
-    type(ch) {
-      if (!ready() || !ch || !/[\p{L}\p{N}]/u.test(ch)) return;
+    // Only the first letter of each word speaks.
+    type(ch, prev) {
+      const word = /[\p{L}\p{N}]/u;
+      if (!ready() || !ch || !word.test(ch) || (prev && word.test(prev))) return;
       const now = ctx.currentTime;
-      if (now - lastTick < 0.055) return;
+      if (now - lastTick < 0.06) return;
       lastTick = now;
       drawBlip(ctx, fx, now + 0.005, ch);
     },
