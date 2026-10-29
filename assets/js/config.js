@@ -35,5 +35,6 @@ export const CONTENTS = [
       { label: "Lobby Land", href: "/playground/lobbyland/", folio: 45 }
     ]
   },
-  { label: "Epilogue: Hire Me", href: "/hire-me/", folio: 47 }
+  { label: "Epilogue: Hire Me", href: "/hire-me/", folio: 47 },
+  { label: "Afterword: Visitors’ Book", href: "/guestbook/", folio: 49 }
 ];

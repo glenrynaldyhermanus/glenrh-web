@@ -4,6 +4,8 @@
  * mountStory() returns a cleanup function called before the page turns.
  */
 
+import { mountCoverNotes } from "./notes.js";
+
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function makeGhost(node) {
@@ -119,7 +121,103 @@ export function mountStory(main, narrator) {
   const tome = main.querySelector("[data-tome]");
   if (tome) cleanups.push(mountTome(main, tome, narrator));
 
+  const phone = main.querySelector("[data-phone]");
+  if (phone) cleanups.push(mountPhone(phone, narrator));
+
+  const coverNotes = main.querySelector("[data-cover-notes]");
+  if (coverNotes) cleanups.push(mountCoverNotes(coverNotes, narrator));
+
   return function () { cleanups.forEach(function (fn) { fn(); }); };
+}
+
+/* Glen's phone on the desk: the reader's local time on the lock screen and
+   one product notification at a time. It holds still while someone is
+   looking at it, and Glen says a word about whichever one they point at. */
+function mountPhone(phone, narrator) {
+  const items = Array.from(phone.querySelectorAll(".desk-phone__notes li"));
+  const clock = phone.querySelector("[data-phone-clock]");
+  const day = phone.querySelector("[data-phone-day]");
+  const timeFmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit" });
+  const dayFmt = new Intl.DateTimeFormat("en-GB", { weekday: "long" });
+  const tick = function () {
+    const now = new Date();
+    clock.textContent = timeFmt.format(now);
+    day.textContent = dayFmt.format(now);
+  };
+  tick();
+  const clockId = setInterval(tick, 30000);
+
+  const onPoint = function (e) {
+    const a = e.target.closest("a[data-say]");
+    if (a) narrator.cue({ say: a.dataset.say });
+  };
+  phone.addEventListener("pointerover", onPoint);
+
+  if (reduceMotion || items.length < 2) {
+    return function () {
+      clearInterval(clockId);
+      phone.removeEventListener("pointerover", onPoint);
+    };
+  }
+
+  let at = Math.max(0, items.findIndex(function (li) { return li.classList.contains("is-active"); }));
+  let rotateId = 0;
+  let dimId = 0;
+  let held = false;
+
+  const light = function () {
+    phone.classList.add("is-lit");
+    clearTimeout(dimId);
+    dimId = setTimeout(function () { if (!held) phone.classList.remove("is-lit"); }, 2600);
+  };
+  const show = function (n) {
+    items[at].classList.remove("is-active");
+    at = (n + items.length) % items.length;
+    items[at].classList.add("is-active");
+    light();
+  };
+  const start = function () {
+    if (rotateId || held || document.hidden) return;
+    rotateId = setInterval(function () { show(at + 1); }, 3600);
+  };
+  const stop = function () { clearInterval(rotateId); rotateId = 0; };
+
+  const hold = function () { held = true; stop(); phone.classList.add("is-lit"); };
+  const release = function () {
+    if (phone.matches(":hover") || phone.contains(document.activeElement)) return;
+    held = false;
+    light();
+    start();
+  };
+  // Tabbing walks through every notification, bringing each one on screen.
+  const onFocus = function (e) {
+    hold();
+    const li = e.target.closest("li");
+    const i = items.indexOf(li);
+    if (i >= 0 && i !== at) show(i);
+  };
+  const onBlur = function (e) { if (!phone.contains(e.relatedTarget)) setTimeout(release, 0); };
+  const onVisibility = function () { if (document.hidden) stop(); else start(); };
+
+  phone.addEventListener("pointerenter", hold);
+  phone.addEventListener("pointerleave", release);
+  phone.addEventListener("focusin", onFocus);
+  phone.addEventListener("focusout", onBlur);
+  document.addEventListener("visibilitychange", onVisibility);
+  const wake = setTimeout(function () { light(); start(); }, 1400);
+
+  return function () {
+    clearInterval(clockId);
+    clearTimeout(wake);
+    clearTimeout(dimId);
+    stop();
+    phone.removeEventListener("pointerover", onPoint);
+    phone.removeEventListener("pointerenter", hold);
+    phone.removeEventListener("pointerleave", release);
+    phone.removeEventListener("focusin", onFocus);
+    phone.removeEventListener("focusout", onBlur);
+    document.removeEventListener("visibilitychange", onVisibility);
+  };
 }
 
 const clamp01 = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
@@ -138,6 +236,7 @@ function mountTome(main, tome, narrator) {
   const cta = desk.querySelector(".desk__cta");
   const sticky = desk.querySelector(".desk__sticky");
   const slot = tome.querySelector("[data-narrator-slot]");
+  const props = Array.from(desk.querySelectorAll("[data-desk-prop]"));
   const openBtn = main.querySelector("[data-open-book]");
   const target = main.querySelector("#prologue");
   const ribbon = main.querySelector(".ribbon");
@@ -226,6 +325,10 @@ function mountTome(main, tome, narrator) {
     slot.toggleAttribute("data-slot-off", p > 0.02);
     cta.style.opacity = String(1 - span(p, 0, 0.06));
     cta.style.visibility = p > 0.06 ? "hidden" : "";
+    props.forEach(function (el) {
+      el.style.opacity = cta.style.opacity;
+      el.style.visibility = cta.style.visibility;
+    });
 
     strap.style.transform = "translateZ(3px) translateX(" + (strapT * 30).toFixed(2) + "%) scaleX(" + (1 - strapT * 0.6).toFixed(3) + ")";
     strap.style.opacity = String(1 - strapT);

@@ -19,12 +19,12 @@
 <link rel="preload" href="/assets/fonts/literata-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="/assets/css/tokens.css?v=7">
-<link rel="stylesheet" href="/assets/css/base.css?v=7">
-<link rel="stylesheet" href="/assets/css/book.css?v=7">
-<link rel="stylesheet" href="/assets/css/components.css?v=7">
-<link rel="stylesheet" href="/assets/css/chapters.css?v=7">
-<link rel="stylesheet" href="/assets/css/playground.css?v=7">
+<link rel="stylesheet" href="/assets/css/tokens.css?v=10">
+<link rel="stylesheet" href="/assets/css/base.css?v=10">
+<link rel="stylesheet" href="/assets/css/book.css?v=10">
+<link rel="stylesheet" href="/assets/css/components.css?v=10">
+<link rel="stylesheet" href="/assets/css/chapters.css?v=10">
+<link rel="stylesheet" href="/assets/css/playground.css?v=10">
 <script>document.documentElement.classList.replace("no-js", "js");</script>
 <script type="importmap">
 { "imports": {
@@ -32,7 +32,7 @@
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="/assets/js/app.js?v=6"></script>
+<script type="module" src="/assets/js/app.js?v=7"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the story</a>
@@ -42,7 +42,7 @@
       <span class="island__seal" aria-hidden="true">G</span>
       <span class="island__where"><span class="island__part">The Book of</span><span class="island__title">Glen</span></span>
       <span class="island__folio" aria-hidden="true"></span>
-      <span class="island__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="island__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
       <span class="visually-hidden">Open the chapters</span>
     </button>
     <div class="island__panel" id="island-panel">
@@ -54,6 +54,7 @@
         <li><a href="/work/"><span class="island__no">II</span><strong>Work</strong><span class="island__sub">Nine businesses</span><span class="island__pg">p.&nbsp;11</span></a></li>
         <li><a href="/playground/"><span class="island__no">III</span><strong>Playground</strong><span class="island__sub">Tiny apps and games</span><span class="island__pg">p.&nbsp;33</span></a></li>
         <li><a href="/hire-me/"><span class="island__no">Epilogue</span><strong>Hire Me</strong><span class="island__sub">Your chapter</span><span class="island__pg">p.&nbsp;47</span></a></li>
+        <li><a href="/guestbook/"><span class="island__no">Afterword</span><strong>Visitors&rsquo; Book</strong><span class="island__sub">Leave a note</span><span class="island__pg">p.&nbsp;49</span></a></li>
       </ol>
       <div class="island__foot">
         <button type="button" class="island__toc" data-open-contents aria-haspopup="dialog">
@@ -104,6 +105,49 @@
         </div>
       </div>
       <div class="desk__glen" data-narrator-slot data-slot="desk"></div>
+
+      <a class="desk__notes" href="/guestbook/" draggable="false" data-cover-notes data-desk-prop data-no-swipe data-say="Readers leave notes on the desk. Click to leave one of your own." aria-label="Leave Glen a note in his visitors&rsquo; book.">
+        <div class="desk__note" style="--tilt: 3deg">
+          <div class="sticky" data-color="yellow">
+            <p class="sticky__msg">Been here? Leave Glen a note.</p>
+            <p class="sticky__by"><strong>Visitors&rsquo; Book</strong><span>p. 49</span></p>
+          </div>
+        </div>
+      </a>
+
+      <div class="desk-phone" data-phone data-desk-prop>
+        <div class="desk-phone__screen">
+          <span class="desk-phone__island" aria-hidden="true"></span>
+          <p class="desk-phone__time" aria-hidden="true"><span data-phone-clock>23:48</span><small data-phone-day>Wednesday</small></p>
+          <ul class="desk-phone__notes" aria-label="Glen&rsquo;s phone: what his products are up to">
+            <li class="is-active"><a href="/work/mtix/" style="--app: #b5323a" data-say="m.tix sells cinema tickets for Indonesia&rsquo;s biggest chain.">
+              <span class="desk-phone__app" aria-hidden="true">m</span>
+              <span class="desk-phone__text"><span class="desk-phone__head"><b>m.tix</b><small>now</small></span><span class="desk-phone__msg">Your tickets for Studio 3 are ready. Enjoy the film!</span></span>
+            </a></li>
+            <li><a href="/work/padel/" style="--app: #3c7a52" data-say="Metropole Padel: courts, tables and the POS at the counter.">
+              <span class="desk-phone__app" aria-hidden="true">P</span>
+              <span class="desk-phone__text"><span class="desk-phone__head"><b>Metropole Padel</b><small>2m</small></span><span class="desk-phone__msg">Court 2 is booked for 19:00. See you on court.</span></span>
+            </a></li>
+            <li><a href="/work/shtev/" style="--app: #2f4f86" data-say="ShtEV runs a network of EV chargers that sell power.">
+              <span class="desk-phone__app" aria-hidden="true">S</span>
+              <span class="desk-phone__text"><span class="desk-phone__head"><b>ShtEV</b><small>5m</small></span><span class="desk-phone__msg">Charging done: 80%. Your car is ready to go.</span></span>
+            </a></li>
+            <li><a href="/work/allnimall/" style="--app: #b5532f" data-say="Allnimall is a platform for pet owners and pet shops.">
+              <span class="desk-phone__app" aria-hidden="true">A</span>
+              <span class="desk-phone__text"><span class="desk-phone__head"><b>Allnimall</b><small>12m</small></span><span class="desk-phone__msg">Mochi&rsquo;s grooming is tomorrow at 10:00.</span></span>
+            </a></li>
+            <li><a href="/work/mavis/" style="--app: #6b4fa0" data-say="MAVIS is my studio of AI agents. They work while I sleep.">
+              <span class="desk-phone__app" aria-hidden="true">M</span>
+              <span class="desk-phone__text"><span class="desk-phone__head"><b>MAVIS</b><small>20m</small></span><span class="desk-phone__msg">Your agents finished 3 tasks overnight.</span></span>
+            </a></li>
+            <li><a href="/work/hris/" style="--app: #a07c31" data-say="HRIS puts hiring on autopilot, from CV to offer.">
+              <span class="desk-phone__app" aria-hidden="true">H</span>
+              <span class="desk-phone__text"><span class="desk-phone__head"><b>HRIS</b><small>1h</small></span><span class="desk-phone__msg">12 new CVs scored. 3 look like a great fit.</span></span>
+            </a></li>
+          </ul>
+          <span class="desk-phone__bar" aria-hidden="true"></span>
+        </div>
+      </div>
     </div>
 
     <div class="desk__cta">

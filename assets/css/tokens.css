@@ -76,6 +76,12 @@
   --highlight: rgb(201 161 74 / 0.42);
   --ok: #3c7a52;
 
+  /* Sticky-note papers from readers' notes. */
+  --note-yellow: #f3df7e;
+  --note-pink: #f2bdb3;
+  --note-green: #cfe0a8;
+  --note-blue: #bcd5ea;
+
   --accent: var(--gold);
   --accent-press: #b48c38;
   --accent-line: var(--gold-deep);

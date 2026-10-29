@@ -326,6 +326,176 @@
 
 .no-js .desk__glen { background: url("/assets/img/glen-poster.webp") center bottom / contain no-repeat; }
 
+/* Glen's phone lies on the desk to the left of the book. Every few seconds
+   the lock screen wakes with a notification from one of his products. */
+.desk-phone {
+  --pw: calc(var(--tw) * 0.42);
+  position: absolute;
+  right: calc(100% + clamp(18px, 5vw, 84px));
+  bottom: 3%;
+  z-index: 2;
+  width: var(--pw);
+  aspect-ratio: 9 / 18.5;
+  padding: calc(var(--pw) * 0.035);
+  border-radius: calc(var(--pw) * 0.17);
+  background: linear-gradient(135deg, #5a6070, #1b1e26);
+  box-shadow:
+    18px 28px 38px rgb(2 4 10 / 0.6),
+    5px 9px 12px rgb(2 4 10 / 0.42),
+    inset 0 0 0 1px rgb(255 255 255 / 0.1);
+  color: var(--on-night);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  transform: perspective(1400px) rotateX(14deg) rotateZ(7deg);
+  transition: transform 420ms var(--ease-out);
+}
+
+.desk-phone:hover,
+.desk-phone:focus-within { transform: perspective(1400px) rotateX(6deg) rotateZ(4deg) scale(1.04); }
+
+.desk-phone__screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: calc(var(--pw) * 0.06) calc(var(--pw) * 0.05) calc(var(--pw) * 0.05);
+  overflow: hidden;
+  border-radius: calc(var(--pw) * 0.135);
+  background:
+    radial-gradient(120% 60% at 25% 0%, rgb(201 161 74 / 0.2), transparent 60%),
+    linear-gradient(#1b2a4c, #0d1426);
+}
+
+/* The screen sleeps dimmed and wakes when a notification lands. */
+.desk-phone__screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.07), transparent 38%),
+    rgb(4 6 12 / 0.5);
+  pointer-events: none;
+  transition: background-color 700ms var(--ease-out);
+}
+
+.desk-phone.is-lit .desk-phone__screen::after,
+.desk-phone:hover .desk-phone__screen::after,
+.desk-phone:focus-within .desk-phone__screen::after,
+.no-js .desk-phone__screen::after { background-color: transparent; }
+
+.desk-phone__island {
+  width: 32%;
+  height: calc(var(--pw) * 0.06);
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: #05070c;
+}
+
+.desk-phone__time {
+  margin-top: calc(var(--pw) * 0.1);
+  font-size: calc(var(--pw) * 0.24);
+  font-weight: 300;
+  line-height: 1;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.desk-phone__time small {
+  display: block;
+  margin-top: calc(var(--pw) * 0.03);
+  font-size: calc(var(--pw) * 0.062);
+  font-weight: 400;
+  opacity: 0.65;
+}
+
+.desk-phone__notes {
+  position: relative;
+  width: 100%;
+  margin: calc(var(--pw) * 0.12) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.desk-phone__notes a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: calc(var(--pw) * 0.035);
+  align-items: start;
+  padding: calc(var(--pw) * 0.04);
+  border-radius: calc(var(--pw) * 0.07);
+  background: rgb(244 236 217 / 0.16);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: inherit;
+  font-size: max(8px, calc(var(--pw) * 0.056));
+  line-height: 1.3;
+  text-decoration: none;
+  transition: background-color var(--duration-default) var(--ease-out);
+}
+
+.desk-phone__notes a:hover { background: rgb(244 236 217 / 0.26); }
+.desk-phone__notes a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.desk-phone__app {
+  display: grid;
+  place-items: center;
+  width: calc(var(--pw) * 0.12);
+  aspect-ratio: 1;
+  border-radius: 24%;
+  background: var(--app, var(--navy));
+  font-weight: 700;
+  font-size: calc(var(--pw) * 0.065);
+  color: #fff;
+}
+
+.desk-phone__text { display: grid; gap: 0.15em; min-width: 0; }
+.desk-phone__head { display: flex; justify-content: space-between; gap: 0.5em; }
+.desk-phone__head b { overflow: hidden; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.desk-phone__head small { flex: none; font-size: 0.9em; opacity: 0.6; }
+
+.desk-phone__msg {
+  display: -webkit-box;
+  overflow: hidden;
+  opacity: 0.85;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.desk-phone__bar {
+  width: 36%;
+  height: calc(var(--pw) * 0.018);
+  margin-top: auto;
+  border-radius: var(--radius-pill);
+  background: rgb(244 236 217 / 0.6);
+}
+
+/* One notification at a time; the rest wait above the screen. */
+.js .desk-phone__notes li {
+  position: absolute;
+  inset: 0 0 auto;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-35%) scale(0.94);
+  transition: opacity 380ms var(--ease-out), transform 520ms var(--ease-out);
+}
+
+.js .desk-phone__notes li.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.no-js .desk-phone__notes { display: grid; gap: calc(var(--pw) * 0.03); }
+.no-js .desk-phone__notes li:nth-child(n + 4) { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .desk-phone { transition: none; }
+  .js .desk-phone__notes { display: grid; gap: calc(var(--pw) * 0.03); }
+  .js .desk-phone__notes li { position: static; display: none; opacity: 1; pointer-events: auto; transform: none; }
+  .js .desk-phone__notes li:nth-child(-n + 2) { display: block; }
+  .desk-phone__screen::after { background-color: transparent; }
+}
+
 .desk__cta {
   display: grid;
   justify-items: center;
@@ -348,6 +518,155 @@
   text-align: center;
 }
 
+/* ---------- Sticky notes (readers' notes) ---------- */
+
+.sticky {
+  --note: var(--note-yellow);
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.65em;
+  padding: 1.15em 1em 0.9em;
+  background:
+    linear-gradient(172deg, rgb(255 255 255 / 0.22), transparent 36%),
+    linear-gradient(to top left, rgb(80 60 20 / 0.08), transparent 22%),
+    var(--note);
+  color: var(--ink);
+  /* Soft contact shadow: paper taped to the desk, not floating above it. */
+  box-shadow:
+    0 0.5px 0.5px rgb(2 4 10 / 0.12),
+    1px 2px 3px rgb(2 4 10 / 0.16),
+    2px 6px 10px -4px rgb(2 4 10 / 0.22);
+  rotate: var(--tilt, 0deg);
+  transform-origin: 50% 0;
+}
+
+.sticky[data-color="pink"] { --note: var(--note-pink); }
+.sticky[data-color="green"] { --note: var(--note-green); }
+.sticky[data-color="blue"] { --note: var(--note-blue); }
+
+/* A strip of tape holds each note up. */
+.sticky::before {
+  content: "";
+  position: absolute;
+  top: -0.55em;
+  left: 50%;
+  width: 38%;
+  height: 1.2em;
+  translate: -50% 0;
+  rotate: -3deg;
+  background: rgb(244 236 217 / 0.62);
+  box-shadow: 0 1px 2px rgb(2 4 10 / 0.15);
+}
+
+.sticky__msg {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.08em;
+  line-height: 1.35;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.sticky__by { display: grid; font-size: 0.8em; line-height: 1.3; color: var(--ink-2); overflow-wrap: anywhere; }
+.sticky__by strong { color: var(--ink); font-weight: 700; }
+.sticky__when { font-size: 0.7em; color: var(--ink-3); }
+
+.sticky__you {
+  position: absolute;
+  top: 0.55em;
+  right: 0.6em;
+  padding: 0.1em 0.55em;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.65em;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+@keyframes sticky-sway {
+  0%, 100% { rotate: var(--tilt, 0deg); }
+  50% { rotate: calc(var(--tilt, 0deg) + 1.4deg); }
+}
+
+@keyframes sticky-in {
+  from { opacity: 0; transform: translateY(-36px) scale(1.12); }
+  60% { opacity: 1; transform: translateY(3px) scale(0.98); }
+  to { transform: none; }
+}
+
+/* A few notes are stuck to the desk above Glen. Drag the top one by a
+   corner to peel it off; it goes to the back of the pile. */
+.desk__notes {
+  position: absolute;
+  left: calc(100% + clamp(16px, 3vw, 56px));
+  top: 3%;
+  z-index: 2;
+  display: grid;
+  width: calc(var(--tw) * 0.36);
+  color: var(--ink);
+  font-size: max(9px, calc(var(--tw) * 0.025));
+  text-decoration: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.js .desk__notes { touch-action: none; cursor: grab; }
+.js .desk__notes.is-dragging { cursor: grabbing; }
+
+.desk__note {
+  position: relative;
+  grid-area: 1 / 1;
+  rotate: var(--tilt, 0deg);
+  transform-origin: 50% 0;
+  animation: sticky-sway 6s ease-in-out infinite var(--sway-delay, 0s);
+}
+
+.desk__note.is-held { animation: none; }
+.desk__note.is-leaving { opacity: 0; transition: opacity 260ms var(--ease-in) 300ms; }
+.desk__note.is-landing { animation: sticky-in 600ms var(--ease-out) both, sticky-sway 6s ease-in-out 600ms infinite; }
+.desk__note:nth-last-child(2) { translate: 9% 7%; }
+.desk__note:nth-last-child(3) { translate: -7% 13%; }
+
+.desk__notes .sticky {
+  rotate: 0deg;
+  aspect-ratio: 1;
+  align-content: space-between;
+  overflow: hidden;
+}
+
+.desk__notes .sticky::before { top: 0; height: 1em; }
+.desk__notes .sticky__msg { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 5; -webkit-box-orient: vertical; }
+.desk__notes .sticky__by strong,
+.desk__notes .sticky__by span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.desk__notes:focus-visible { outline: none; }
+.desk__notes:focus-visible .desk__note:last-child .sticky { outline: 3px solid var(--gold); outline-offset: -3px; }
+
+/* The peel: a soft shade on the note underneath, and the paper flap on top.
+   notes.js sets the clip paths and transforms as the corner is dragged. */
+.peel-under,
+.peel-flap-wrap,
+.peel-flap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.peel-under { overflow: hidden; }
+.peel-flap-wrap { filter: drop-shadow(0.5px 1.5px 1.5px rgb(2 4 10 / 0.18)); }
+.peel-flap { transform-origin: 0 0; overflow: hidden; }
+.peel-band { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.peel-under[hidden],
+.peel-flap-wrap[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky,
+  .desk__note,
+  .desk__note.is-landing { animation: none; }
+  .desk__note.is-leaving { transition: none; }
+}
+
 /* While the book is opening the scroll owns every transform, so drop the
    hover easing and keep Glen out of the way. */
 .tome.is-moving .tome__book { transition: none; cursor: default; }
@@ -360,12 +679,21 @@ body:has(.tome.is-moving) .narrator { opacity: 0; transition: opacity 250ms var(
 
 @media (max-width: 899px) {
   .desk__glen { left: calc(100% - 4vw); width: clamp(120px, 20vw, 170px); }
+  .desk-phone { --pw: calc(var(--tw) * 0.36); right: calc(100% + 3vw); }
+  .desk__notes { left: calc(100% + 2.5vw); width: calc(var(--tw) * 0.32); }
 }
 
+/* On phones there's no room beside the book, so the phone peeks out from
+   under its bottom-left corner and only shows who's calling. */
 @media (max-width: 559px) {
   .desk { --tw: min(68vw, (100svh - var(--masthead-h) - 170px) * 0.75); }
   .tome { margin-right: 18vw; }
   .desk__glen { left: calc(100% - 9vw); bottom: -8%; width: 30vw; }
+  .desk-phone { --pw: 23vw; right: calc(100% - 19vw); bottom: -13%; }
+  .desk-phone__msg { display: none; }
+  .desk__notes { left: calc(100% - 3vw); top: -3%; width: 24vw; font-size: 8px; }
+  .desk__note:nth-last-child(n + 3) { display: none; }
+  .desk__notes .sticky__msg { -webkit-line-clamp: 4; }
 }
 
 /* ---------- Story list (contents-style rows) ---------- */
